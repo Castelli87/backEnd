@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "mongodb": "^5.6.0",
+    "mongoose": "^7.2.2",
+    "nodemon": "^2.0.22"
+  },
+  "name": "backend",
+  "description": "Spiking on the BE",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Castelli87/backEnd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Castelli87/backEnd/issues"
+  },
+  "homepage": "https://github.com/Castelli87/backEnd#readme"
+}
