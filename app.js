@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const UserModel = require("./models/User")
+const UserModel = require("./models/User");
+const User = require("./models/User");
 
 
 // implement dot env to read env variables
@@ -40,6 +41,16 @@ app.post("/users", async (req, res) => {
     console.log(error);
   }
 });
+
+app.get("/users", async (req, res) => {
+  try{
+    const allUsers = await User.find({});
+
+  return res.status(200).json({allUsers});
+  } catch (err){
+    console.log(err)
+  }
+})
 // listen on port 3000
 app.listen(3000, () => {
   console.log("Server is listening on port 3000");
