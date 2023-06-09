@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "69111278612",
+    "project_id": "spike-campervan-rental",
+    "storage_bucket": "spike-campervan-rental.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69111278612:android:2962f57d90afecb4ddcb01",
+        "android_client_info": {
+          "package_name": "cookie.bytes.campervan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69111278612-fvme1m4t8jdi6t8ep7t9sjmufqgsecuu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhQq1wq1MnnMeyOKx4-b5uJNiox4MGvKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69111278612-fvme1m4t8jdi6t8ep7t9sjmufqgsecuu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
