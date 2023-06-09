@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const app = express();
 const UserModel = require("./models/User");
 const User = require("./models/User");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 
 // implement dot env to read env variables
@@ -51,6 +52,32 @@ app.get("/users", async (req, res) => {
     console.log(err)
   }
 })
+
+app.get("/public-key", async (req, res) => {
+  try {
+    const publicKey = process.env.STRIPE_PUBLIC_KEY;
+
+    return res.status(200).send({publicKey});
+  }
+  catch(err){
+    console.log(err);
+  }
+})
+
+app.post("/payment-intent", async ( req, res) => {
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: req.body.amount,
+      currency: "GBP",
+      automatic_payment_methods: {enabled: true}
+    })
+
+    res.json({paymentIntent:paymentIntent.client_secret});
+  } catch(err){
+    console.log(err.message);
+  }
+})
+
 // listen on port 3000
 app.listen(3000, () => {
   console.log("Server is listening on port 3000");
