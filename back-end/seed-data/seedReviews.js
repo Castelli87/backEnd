@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const User = require("../models/User");
-const { users } = require("../data/users");
+const Reviews = require("../models/Reviews");
+const { reviews } = require("../data/reviews");
 
 require("dotenv").config();
 
@@ -15,8 +15,8 @@ mongoose
   .catch((err) => console.log(err));
 
 const seedDb = async () => {
-  await User.deleteMany({});
-  await User.insertMany(users);
+  await Reviews.deleteMany({});
+  await Reviews.insertMany(reviews);
 };
 
 seedDb().then(() => {

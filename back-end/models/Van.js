@@ -14,6 +14,10 @@ const VanSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  make: {
+    type: String,
+    required: true,
+  },
   model: {
     type: String,
     required: true,
