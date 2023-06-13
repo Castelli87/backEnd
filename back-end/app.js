@@ -11,6 +11,12 @@ app.use(express.json())
 // implement dot env to read env variables
 require("dotenv").config();
 
+console.log(process.env.NODE_ENV)
+
+// const conn = async () => await mongoose.createConnection('mongodb://127.0.0.1:27017/campervanapp').asPromise();
+// conn.readyState;
+
+// console.log(conn.readyState)
 // connect mongodb with mongoose
 mongoose
   .connect(process.env.MONGODB_URI, {

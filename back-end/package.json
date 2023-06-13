@@ -16,9 +16,11 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
+
     "test": "jest --testTimeout=5000",
     "start": "nodemon app.js"
     
+
   },
   "repository": {
     "type": "git",
