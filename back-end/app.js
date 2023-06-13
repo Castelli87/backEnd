@@ -4,7 +4,9 @@ const app = express();
 const UserModel = require("./models/User");
 const User = require("./models/User");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const {getUsers, getUserById} = require('./controllers/user.controller');
 
+app.use(express.json())
 
 // implement dot env to read env variables
 require("dotenv").config();
@@ -26,65 +28,66 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-app.use(express.json())
-app.post("/users", async (req, res) => {
-    console.log(req.body)
-  const username = req.body.username;
-  const name = req.body.name;
-  const email = req.body.email;
 
-  const user = new UserModel({
-    username: username,
-    name: name,
-    email: email,
-  });
-  try {
-    await user.save();
-    res.status(201).json({
-        message: 'We Win!!!!',
-        user
-    });
-  } catch (error) {
-    console.log(error);
-  }
+// app.post("/users", async (req, res) => {
+//     console.log(req.body)
+//   const username = req.body.username;
+//   const name = req.body.name;
+//   const email = req.body.email;
+
+//   const user = new UserModel({
+//     username: username,
+//     name: name,
+//     email: email,
+//   });
+//   try {
+//     await user.save();
+//     res.status(201).json({
+//         message: 'We Win!!!!',
+//         user
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
+app.get("/users",getUsers)
+app.get("/users/:id",getUserById)
+
+
+app.all("*", (req, res) => {
+  res.status(404).send({ msg: "request not found" });
 });
 
-app.get("/users", async (req, res) => {
-  try{
-    const allUsers = await User.find({});
+// app.listen(3000, () => {
+//   console.log("Server is listening on port 3000");
+// });
 
-  return res.status(200).json({allUsers});
-  } catch (err){
-    console.log(err)
-  }
-})
+module.exports =app;
 
-app.get("/public-key", async (req, res) => {
-  try {
-    const publicKey = process.env.STRIPE_PUBLIC_KEY;
+// app.get("/public-key", async (req, res) => {
+//   try {
+//     const publicKey = process.env.STRIPE_PUBLIC_KEY;
 
-    return res.status(200).send({publicKey});
-  }
-  catch(err){
-    console.log(err);
-  }
-})
+//     return res.status(200).send({publicKey});
+//   }
+//   catch(err){
+//     console.log(err);
+//   }
+// })
 
-app.post("/payment-intent", async ( req, res) => {
-  try {
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: req.body.amount,
-      currency: "GBP",
-      automatic_payment_methods: {enabled: true}
-    })
+// app.post("/payment-intent", async ( req, res) => {
+//   try {
+//     const paymentIntent = await stripe.paymentIntents.create({
+//       amount: req.body.amount,
+//       currency: "GBP",
+//       automatic_payment_methods: {enabled: true}
+//     })
 
-    res.json({paymentIntent:paymentIntent.client_secret});
-  } catch(err){
-    console.log(err.message);
-  }
-})
+//     res.json({paymentIntent:paymentIntent.client_secret});
+//   } catch(err){
+//     console.log(err.message);
+//   }
+// })
+ 
 
-// listen on port 3000
-app.listen(3000, () => {
-  console.log("Server is listening on port 3000");
-});
