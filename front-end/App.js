@@ -11,6 +11,7 @@ import Nav from "./components/Nav";
 import * as React from "react";
 import { Register } from "./pages/Register";
 import { Login } from "./components/Login";
+import { AdvertiseVan } from "./pages/AdvertiseVan";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,7 @@ export default function App() {
         <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="Vans" component={Vans} />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="AdvertiseVan" component={AdvertiseVan} />
         <Stack.Screen
           name="Login"
           component={Login}

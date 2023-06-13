@@ -5,9 +5,9 @@ import { Button, View } from "react-native";
 import Home from "../pages/Home";
 import { useNavigation } from "@react-navigation/native";
 
-function Nav(props) {
+function Nav() {
   const { navigate } = useNavigation();
-  console.log(props);
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Button title="Home" onPress={() => navigate("Home")} />
