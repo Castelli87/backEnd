@@ -10,7 +10,7 @@ const users = [
     lastName: "Hawkins",
     email: "magna.ut@outlook.org",
     phoneNumber: "07396650881",
-    image:
+    img:
       "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
   },
   {
@@ -24,7 +24,7 @@ const users = [
     lastName: "Whitfield",
     email: "mi.lacinia@aol.com",
     phoneNumber: "07396600001",
-    image:
+    img:
       "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
   },
   {
@@ -38,7 +38,7 @@ const users = [
     lastName: "Hooper",
     email: "vulputate.lacus.cras@protonmail.co.uk",
     phoneNumber: "07396909901",
-    image:
+    img:
       "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
   },
   {
@@ -52,7 +52,7 @@ const users = [
     lastName: "Ewing",
     email: "maecenas@yahoo.com",
     phoneNumber: "07396902222",
-    image:
+    img:
       "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
   },
   {
@@ -66,7 +66,7 @@ const users = [
     lastName: "Frank",
     email: "lorem.ipsum@icloud.com",
     phoneNumber: "07396904444",
-    image:
+    img:
       "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
   },
 ];
