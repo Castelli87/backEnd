@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 import axios from "axios";
 import { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -7,6 +7,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./pages/Home";
 import { UserProfile } from "./pages/UserProfile";
 import { Vans } from "./pages/Vans";
+import Nav from "./components/Nav";
+import * as React from "react";
+import { Register } from "./pages/Register";
+import { Login } from "./components/Login";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,11 +32,17 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Nav></Nav>
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="UserProfile" component={UserProfile} />
-        <Stack.Screen name="Vans" component={Vans
-        } />
+        <Stack.Screen name="Vans" component={Vans} />
+        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ presentation: "modal" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
