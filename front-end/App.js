@@ -12,6 +12,7 @@ import * as React from "react";
 import { Register } from "./pages/Register";
 import { Login } from "./components/Login";
 import { AdvertiseVan } from "./pages/AdvertiseVan";
+import { IndividualVan } from "./pages/IndividualVan";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,7 @@ export default function App() {
           component={Login}
           options={{ presentation: "modal" }}
         />
+        <Stack.Screen name="IndividualVan" component={IndividualVan} />
       </Stack.Navigator>
     </NavigationContainer>
   );
