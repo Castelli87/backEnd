@@ -1,3 +1,5 @@
 node_modules
 mongoDetails
-.env
+.env*
+back
+google-services.json
