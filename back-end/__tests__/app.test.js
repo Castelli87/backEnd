@@ -246,6 +246,31 @@ describe("/vans/:id/reviews", () => {
         );
       });
   });
+  test("GET - status: 400 respond with correct error message if end point is not valid", () => {
+    return request(app)
+      .get("/vans/nonsense/reviews")
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("bad request");
+      });
+  });
+  test("GET - status: 404 respond with correct error message if valid id but does not exist yet ", () => {
+    return request(app)
+      .get("/vans/648847dd474b8491a2e59d55/reviews")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.error).toBe("request not found");
+      });
+  });
+  test("GET - STATUS: 200 - responds with an empty array ", () => {
+    return request(app)
+    .get("/vans/64873c83768e970eec9aa22c/reviews")
+      .expect(200)
+      .then((response) => {
+
+        expect(response.body.reviews).toEqual([]);
+      });})
+
 });
 
 //--detectOpenHandles
