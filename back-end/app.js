@@ -5,19 +5,14 @@ const UserModel = require("./models/User");
 const User = require("./models/User");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const {getUsers, getUserById} = require('./controllers/user.controller');
+const {getVans,getVanById}= require('./controllers/van.controller')
 
 app.use(express.json())
 
 // implement dot env to read env variables
 require("dotenv").config();
 
-console.log(process.env.NODE_ENV)
 
-// const conn = async () => await mongoose.createConnection('mongodb://127.0.0.1:27017/campervanapp').asPromise();
-// conn.readyState;
-
-// console.log(conn.readyState)
-// connect mongodb with mongoose
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -28,7 +23,17 @@ mongoose
   })
   .catch((err) => console.log(err));
 
+  app.get("/users",getUsers)
+  app.get("/users/:id",getUserById)
+  
+  app.get("/vans",getVans)
+  app.get("/vans/:id",getVanById)
+  
+  app.all("*", (req, res) => {
+    res.status(404).send({ msg: "request not found" });
+  });
 
+  module.exports =app;
 // app.post("/users", async (req, res) => {
 //     console.log(req.body)
 //   const username = req.body.username;
@@ -51,19 +56,13 @@ mongoose
 //   }
 // });
 
-app.get("/users",getUsers)
-app.get("/users/:id",getUserById)
 
 
-app.all("*", (req, res) => {
-  res.status(404).send({ msg: "request not found" });
-});
-
-// app.listen(3000, () => {
-//   console.log("Server is listening on port 3000");
-// });
-
-module.exports =app;
+/* 
+ app.listen(3000, () => {
+  console.log("Server is listening on port 3000");
+ }); */
+ 
 
 // app.get("/public-key", async (req, res) => {
 //   try {
