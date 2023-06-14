@@ -7,6 +7,8 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const { getUsers, getUserById } = require("./controllers/user.controller");
 const { getVans, getVanById } = require("./controllers/van.controller");
 const { getReviewByVanId } = require("./controllers/review.controller");
+const {postVans}=require('./controllers/postUser.controller');
+const postUser = require("./controllers/postUser.controller");
 
 app.use(express.json());
 
@@ -29,6 +31,8 @@ app.get("/users/:id", getUserById);
 app.get("/vans", getVans);
 app.get("/vans/:id", getVanById);
 app.get("/vans/:id/reviews", getReviewByVanId);
+
+app.post('/users', postUser);
 
 app.all("*", (req, res) => {
   res.status(404).send({ msg: "request not found" });
