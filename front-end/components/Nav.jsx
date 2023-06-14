@@ -15,6 +15,7 @@ function Nav() {
       <Button title="View Vans" onPress={() => navigate("Vans")} />
       <Button title="Register" onPress={() => navigate("Register")} />
       <Button title="Login" onPress={() => navigate("Login")} />
+      <Button title="IndividualVan" onPress={() => navigate("IndividualVan")} />
     </View>
   );
 }
