@@ -15,3 +15,11 @@ export const getCampervans = async () => {
     
   
 };
+
+export const getCamperVan = async () => {
+  try {
+    instance.get("/vans/:id")
+  } catch(err){
+    console.log(err)
+  }
+}

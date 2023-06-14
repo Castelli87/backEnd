@@ -1,4 +1,4 @@
-import { FlatList, Image, ScrollView, Text, View } from "react-native";
+import { Button, FlatList, Image, ScrollView, Text, View } from "react-native";
 import { useState, useEffect } from "react";
 import { getCampervans } from "../api";
 import axios from "axios";
@@ -25,6 +25,7 @@ export const Vans = () => {
               }}
             ></Image>
             <Text>{campervan.pricePerNight}</Text>
+            <Button title={campervan._id} onPress={() => navigate("IndividualVan")}></Button>
           </>
         );
       })}
