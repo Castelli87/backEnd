@@ -6,11 +6,10 @@ import axios from "axios";
 export const Vans = () => {
   const [campervans, setCampervans] = useState([]);
   useEffect(() => {
-    getCampervans().then((campervans) => {
-      console.log(campervans);
-    });
-    console.log(campervans);
-    setCampervans(allVans);
+
+   getCampervans().then(({data}) => {
+     setCampervans(data.allVans);
+   })
   }, []);
 
   return (

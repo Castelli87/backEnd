@@ -17,20 +17,20 @@ import { IndividualVan } from "./pages/IndividualVan";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const fecthApi = () => {
-    axios
-      .get("http://192.168.0.11:3000/users")
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const fecthApi = () => {
+  //   axios
+  //     .get("http://192.168.0.11:3000/users")
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
-  useEffect(() => {
-    fecthApi();
-  }, []);
+  // useEffect(() => {
+  //   fecthApi();
+  // }, []);
 
   return (
     <NavigationContainer>
