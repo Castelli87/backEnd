@@ -1,5 +1,9 @@
+const mongoose = require('mongoose');
+const { Types } = mongoose;
+
 const users = [
   {
+    _id: new Types.ObjectId('648733606b77da2cfea3e770'),
     username: "username1",
     password: "password1",
     location: {
@@ -14,6 +18,7 @@ const users = [
       "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
   },
   {
+    _id: new Types.ObjectId('648733606b77da2cfea3e771'),
     username: "username2",
     password: "password2",
     location: {
@@ -28,6 +33,7 @@ const users = [
       "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
   },
   {
+    _id: new Types.ObjectId('648733606b77da2cfea3e772'),
     username: "username3",
     password: "password3",
     location: {
@@ -42,6 +48,7 @@ const users = [
       "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
   },
   {
+    _id: new Types.ObjectId('648733606b77da2cfea3e773'),
     username: "username4",
     password: "password4",
     location: {
@@ -56,6 +63,7 @@ const users = [
       "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
   },
   {
+    _id: new Types.ObjectId('648733606b77da2cfea3e774'),
     username: "username5",
     password: "password5",
     location: {
