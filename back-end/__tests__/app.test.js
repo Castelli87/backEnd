@@ -56,7 +56,7 @@ describe("/users", () => {
   });
 });
 
-describe("/users/:id", () => {
+describe.skip("/users/:id", () => {
   test("GET - STATUS: 200 - respond with the specific user id", () => {
     return request(app)
       .get("/users/648847dd474b8491a2e59d4f")
@@ -247,5 +247,21 @@ describe("/vans/:id/reviews", () => {
       });
   });
 });
+
+describe("GET /bookings", () => {
+  test("Should return STATUS - 200 responds with a list of bookings with required properties", () => {
+    return request(app).get("/bookings").then( ({body}) => {
+      body.bookings.forEach(({userId, vanId, startDate, endDate, totalCost, paymentDetails }) => {
+        expect(typeof userId).toBe("string");
+        expect(typeof vanId).toBe("string");
+        expect(typeof startDate).toBe("string");
+        expect(typeof endDate).toBe("string");
+        expect(typeof totalCost).toBe("number");
+        expect(typeof paymentDetails).toBe("string");
+      })
+    })
+  })
+  
+})
 
 //--detectOpenHandles

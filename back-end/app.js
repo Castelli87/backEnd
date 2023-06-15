@@ -11,6 +11,7 @@ const {postVan, postVanByOwner}=require('./controllers/postVan.controller');
 const {postUser} = require("./controllers/postUser.controller");
 const {getApi}= require("./controllers/api.controller");
 const {postBooking}=require("./controllers/postBooking.controller");
+const { getBookings } = require("./controllers/getBookings.controller");
 app.use(express.json());
 
 // implement dot env to read env variables
@@ -32,6 +33,8 @@ app.get("/users/:id", getUserById);
 app.get("/vans", getVans);
 app.get("/vans/:id", getVanById);
 app.get("/vans/:id/reviews", getReviewByVanId);
+
+app.get("/bookings", getBookings);
 
 app.get("/api", getApi)
 app.post("/users", postUser);
