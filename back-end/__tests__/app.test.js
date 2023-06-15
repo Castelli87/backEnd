@@ -1,12 +1,17 @@
 const mongoose = require("mongoose");
 const request = require("supertest");
 const app = require("../app");
+const seedDatabase = require('../seed-data/seed')
 
 require("dotenv").config();
 
 /* Connecting to the database before each test. */
-beforeEach(async () => {
-  await mongoose.connect(process.env.MONGODB_URI);
+beforeAll(async () => {
+  await mongoose.connect(process.env.MONGODB_URI,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+/*  await seedDatabase()  */
 });
 afterAll(async () => {
   await mongoose.connection.close();
@@ -59,7 +64,7 @@ describe("/users", () => {
 describe("/users/:id", () => {
   test("GET - STATUS: 200 - respond with the specific user id", () => {
     return request(app)
-      .get("/users/648847dd474b8491a2e59d4f")
+      .get("/users/648733606b77da2cfea3e770")
       .expect(200)
       .then((response) => {
         const {
@@ -220,6 +225,7 @@ describe("/vans/:id/reviews", () => {
       .expect(200)
       .then((response) => {
         const reviews = response.body.reviews;
+        console.log(response.body)
         reviews.forEach(({ userId, vanId, rating, comment, createdAt }) => {
           expect(typeof userId).toBe("string");
           expect(typeof vanId).toBe("string");

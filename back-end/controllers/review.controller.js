@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const Reviews = require("../models/Reviews");
 const Van = require("../models/Van");
+const User=require("../models/User")
 
-async function getReviewWithUsername(reviewId) {
+/* async function getReviewWithUsername(reviewId) {
   try {
     const review = await Review.findById(reviewId).populate('user');
     if (review && review.user) {
@@ -14,7 +15,7 @@ async function getReviewWithUsername(reviewId) {
   } catch (error) {
     console.log('Error:', error.message);
   }
-}
+} */
 
 
 const getReviewByVanId = async (req, res) => {
@@ -32,8 +33,11 @@ const getReviewByVanId = async (req, res) => {
   const reviews = await Reviews.find({ vanId: van }).sort({
     createdAt: -1,
   });
+  const username = await User.find({userId:reviews.userId})
 
-  return res.status(200).json({ reviews });
+
+
+  return res.status(200).json({ reviews ,username});
 };
 
 module.exports = { getReviewByVanId };
