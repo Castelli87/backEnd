@@ -264,4 +264,33 @@ describe("GET /bookings", () => {
   
 })
 
+describe("GET /bookings/:booking_id", () => {
+  test("STATUS - 200 and expect booking values to be as expected.", () => {
+    return request(app).get("/bookings/648b19c7b62d2aa61de8a6f7").expect(200).then(({body}) => {
+      const { userId, vanId, startDate, endDate, totalCost, paymentDetails } = body.booking;
+
+      expect(userId).toBe("648733606b77da2cfea3e774")
+      expect(vanId).toBe("64873c83768e970eec9aa22a")
+      expect(startDate).toBe("2023-08-01T00:00:00.000Z")
+      expect(endDate).toBe("2023-08-03T00:00:00.000Z")
+      expect(totalCost).toBe(100)
+      expect(paymentDetails).toBe("unpaid")
+    })
+  })
+
+  test("Should return 400 bad request if the id is not a valid string", () => {
+    return request(app).get("/bookings/648b19").expect(400).then(({body}) => {
+      expect(body.msg).toBe("Bad Request");
+    })
+  })
+
+  test("Should return a 404 Not Found error if the id does not exist in the database", () => {
+    return request(app).get("/bookings/648b19c7b62d2ba61de8a6f7").expect(404).then(({body}) => {
+      expect(body.msg).toBe("Not Found")
+    })
+  })
+
+
+})
+
 //--detectOpenHandles

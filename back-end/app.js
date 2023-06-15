@@ -11,7 +11,7 @@ const {postVan, postVanByOwner}=require('./controllers/postVan.controller');
 const {postUser} = require("./controllers/postUser.controller");
 const {getApi}= require("./controllers/api.controller");
 const {postBooking}=require("./controllers/postBooking.controller");
-const { getBookings } = require("./controllers/getBookings.controller");
+const { getBookings, getBookingById } = require("./controllers/getBookings.controller");
 app.use(express.json());
 
 // implement dot env to read env variables
@@ -35,6 +35,7 @@ app.get("/vans/:id", getVanById);
 app.get("/vans/:id/reviews", getReviewByVanId);
 
 app.get("/bookings", getBookings);
+app.get("/bookings/:booking_id", getBookingById);
 
 app.get("/api", getApi)
 app.post("/users", postUser);
@@ -45,6 +46,12 @@ app.post("/bookings", postBooking)
 app.all("*", (req, res) => {
   res.status(404).send({ msg: "request not found" });
 });
+
+app.use((err, req, res, next) => {
+  if(err.msg && err.status) res.status(err.status).send({msg: err.msg})
+
+  next(err);
+})
 
 module.exports = app;
 // app.post("/users", async (req, res) => {
@@ -69,10 +76,10 @@ module.exports = app;
 //   }
 // });
 
-/* 
- app.listen(3000, () => {
-  console.log("Server is listening on port 3000");
- }); */
+
+//  app.listen(3000, () => {
+//   console.log("Server is listening on port 3000");
+//  });
 
 // app.get("/public-key", async (req, res) => {
 //   try {

@@ -17,7 +17,7 @@
   "main": "app.js",
   "scripts": {
 
-    "test": "npm run seed & jest --testTimeout=5000",
+    "test": "jest --testTimeout=5000",
     "start": "nodemon app.js",
     "seed": "node seed-data/seedUser.js & node seed-data/seedCampervan.js & node seed-data/seedReviews.js & node seed-data/seedBookings.js"
     

@@ -6,3 +6,23 @@ exports.getBookings = async (req, res) => {
 
     return res.status(200).send({bookings})
 }
+
+exports.getBookingById = async (req, res, next) => {
+    try{
+
+        
+    const id = req.params.booking_id;
+
+    
+
+    if(!mongoose.isValidObjectId(id)) res.status(400).send({msg: "Bad Request" });
+    
+    const booking = await Bookings.findById(id).exec()
+
+    if(!booking ) res.status(404).send({msg: "Not Found"})
+    
+    return res.status(200).send({booking});
+    } catch(err){
+        next(err)
+    }
+}
