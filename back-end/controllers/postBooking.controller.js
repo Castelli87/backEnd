@@ -3,6 +3,7 @@ const Booking = require("../models/Bookings");
 
 
 const postBooking = async (req, res) => {
+    
     const {userId, vanId, startDate, endDate, totalCost, paymentDetails}= req.body;
     const newBooking = new Booking({
         userId:userId,

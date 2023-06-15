@@ -11,6 +11,8 @@ const {postVan, postVanByOwner}=require('./controllers/postVan.controller');
 const {postUser} = require("./controllers/postUser.controller");
 const {getApi}= require("./controllers/api.controller");
 const {postBooking}=require("./controllers/postBooking.controller");
+const {postReview}=require("./controllers/postReview.controller");
+const {patchUser}=require("./controllers/patchUser.controller");
 app.use(express.json());
 
 // implement dot env to read env variables
@@ -32,12 +34,17 @@ app.get("/users/:id", getUserById);
 app.get("/vans", getVans);
 app.get("/vans/:id", getVanById);
 app.get("/vans/:id/reviews", getReviewByVanId);
-
 app.get("/api", getApi)
+
 app.post("/users", postUser);
-app.post("/vans", postVan)
-app.post("/:owner/vans", postVanByOwner)
-app.post("/bookings", postBooking)
+app.post("/vans", postVan);
+app.post("/:owner/vans", postVanByOwner);
+app.post("/bookings", postBooking);
+app.post("/vans/:id/reviews", postReview);
+
+app.patch("/users/:id", patchUser)
+
+
 
 app.all("*", (req, res) => {
   res.status(404).send({ msg: "request not found" });
