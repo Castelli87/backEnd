@@ -1,5 +1,153 @@
 {
-    "GET /api": {
-      "description": "serves up a json representation of all the available endpoints of the api"
+  "GET /api": {
+    "description": "serves up a json representation of all the available endpoints of the api"
+  },
+  "GET /users": {
+    "description": "returns an array of all the user objects in the data base",
+    "queries": [],
+    "exampleResponse": [
+      {
+        "location": {
+          "region": "barnsley",
+          "postcode": "s704qr"
+        },
+        "_id": "648733606b77da2cfea3e770",
+        "username": "username1",
+        "firstName": "Ezekiel",
+        "lastName": "Hawkins",
+        "email": "magna.ut@outlook.org",
+        "password": "password1",
+        "phoneNumber": "07396650881",
+        "img": "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
+        "__v": 0
+      }
+    ]
+  },
+  "GET /users/:id": {
+    "description": "returns a specific user object using the id",
+    "queries": [
+      "id"
+    ],
+    "exampleResponse": {
+      "location": {
+        "region": "barnsley",
+        "postcode": "s704qr"
+      },
+      "_id": "648733606b77da2cfea3e770",
+      "username": "username1",
+      "firstName": "Ezekiel",
+      "lastName": "Hawkins",
+      "email": "magna.ut@outlook.org",
+      "password": "password1",
+      "phoneNumber": "07396650881",
+      "img": "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
+      "__v": 0
     }
-}
+  },
+  "GET /vans": {
+    "description": "returns an array of all the van objects in the data base",
+    "queries": [],
+    "exampleResponse": [
+      {
+        "_id": "64873c83768e970eec9aa22a",
+        "vanName": "The Voyager",
+        "description": "The Volkswagen California is a versatile and comfortable campervan that offers a perfect blend of functionality and style. It is an ideal choice for your next adventure. ",
+        "owner": "648733606b77da2cfea3e770",
+        "make": "Volkswagen",
+        "model": "California",
+        "year": 2022,
+        "amenities": [
+          "kitchen",
+          "sun roof",
+          "dining area"
+        ],
+        "pricePerNight": 50,
+        "sleeps": 2,
+        "images": [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8wKy1lKY3Wx2cPvKVs1lUWVnltoy4V2YOsw&usqp=CAU",
+          "https://media.gq-magazine.co.uk/photos/5e74910306bab00008958011/16:9/pass/20200320-VW-Electric-03.jpg",
+          "https://vanlifeadventure.com/wp-content/uploads/2019/06/vanlife-adventure-kepler-sixty-vw-camper-california-05.jpg"
+        ],
+        "__v": 0
+      }
+    ]
+  },
+  "GET /vans/:id": {
+    "description": "returns a specific user object using the id",
+    "queries": ["id"],
+    "exampleResponse": 
+      {
+        "_id": "64873c83768e970eec9aa22a",
+        "vanName": "The Voyager",
+        "description": "The Volkswagen California is a versatile and comfortable campervan that offers a perfect blend of functionality and style. It is an ideal choice for your next adventure. ",
+        "owner": "648733606b77da2cfea3e770",
+        "make": "Volkswagen",
+        "model": "California",
+        "year": 2022,
+        "amenities": [
+          "kitchen",
+          "sun roof",
+          "dining area"
+        ],
+        "pricePerNight": 50,
+        "sleeps": 2,
+        "images": [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8wKy1lKY3Wx2cPvKVs1lUWVnltoy4V2YOsw&usqp=CAU",
+          "https://media.gq-magazine.co.uk/photos/5e74910306bab00008958011/16:9/pass/20200320-VW-Electric-03.jpg",
+          "https://vanlifeadventure.com/wp-content/uploads/2019/06/vanlife-adventure-kepler-sixty-vw-camper-california-05.jpg"
+        ],
+        "__v": 0
+      }
+  }, 
+  "POST /users":{
+    "description":"post a user to the database and returns new user",
+    "queries": [],
+    "exampleResponse": [
+      {
+        "location": {
+          "region": "barnsley",
+          "postcode": "s704qr"
+        },
+        "_id": "648733606b77da2cfea3e770",
+        "username": "username1",
+        "firstName": "Ezekiel",
+        "lastName": "Hawkins",
+        "email": "magna.ut@outlook.org",
+        "password": "password1",
+        "phoneNumber": "07396650881",
+        "img": "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg",
+        "__v": 0
+      }
+    ]
+  },
+  "POST /:owner/vans":{
+    
+      "description":"post a van to a specific user in the database and returns new van",
+      "queries": ["owner"],
+      "exampleResponse": {
+        "_id": "64873c83768e970eec9aa22a",
+        "vanName": "The Voyager",
+        "description": "The Volkswagen California is a versatile and comfortable campervan that offers a perfect blend of functionality and style. It is an ideal choice for your next adventure. ",
+        "owner": "648733606b77da2cfea3e770",
+        "make": "Volkswagen",
+        "model": "California",
+        "year": 2022,
+        "amenities": [
+          "kitchen",
+          "sun roof",
+          "dining area"
+        ],
+        "pricePerNight": 50,
+        "sleeps": 2,
+        "images": [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8wKy1lKY3Wx2cPvKVs1lUWVnltoy4V2YOsw&usqp=CAU",
+          "https://media.gq-magazine.co.uk/photos/5e74910306bab00008958011/16:9/pass/20200320-VW-Electric-03.jpg",
+          "https://vanlifeadventure.com/wp-content/uploads/2019/06/vanlife-adventure-kepler-sixty-vw-camper-california-05.jpg"
+        ],
+        "__v": 0
+      }
+  
+
+    }
+
+  }
