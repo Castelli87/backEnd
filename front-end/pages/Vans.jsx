@@ -2,14 +2,16 @@ import { Button, FlatList, Image, ScrollView, Text, View } from "react-native";
 import { useState, useEffect } from "react";
 import { getCampervans } from "../api";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 export const Vans = () => {
   const [campervans, setCampervans] = useState([]);
-  useEffect(() => {
+  const { navigate } = useNavigation();
 
-   getCampervans().then(({data}) => {
-     setCampervans(data.allVans);
-   })
+  useEffect(() => {
+    getCampervans().then(({ data }) => {
+      setCampervans(data.allVans);
+    });
   }, []);
 
   return (
@@ -25,7 +27,14 @@ export const Vans = () => {
               }}
             ></Image>
             <Text>{campervan.pricePerNight}</Text>
-            <Button title={campervan._id} onPress={() => navigate("IndividualVan")}></Button>
+            <Button
+              title={campervan._id}
+              onPress={() =>
+                navigate("IndividualVan", {
+                  id: campervan._id,
+                })
+              }
+            ></Button>
           </>
         );
       })}
