@@ -10,6 +10,7 @@ const { getReviewByVanId } = require("./controllers/review.controller");
 const {postVan, postVanByOwner}=require('./controllers/postVan.controller');
 const {postUser} = require("./controllers/postUser.controller");
 const {getApi}= require("./controllers/api.controller");
+const {postBooking}=require("./controllers/postBooking.controller");
 app.use(express.json());
 
 // implement dot env to read env variables
@@ -36,6 +37,7 @@ app.get("/api", getApi)
 app.post("/users", postUser);
 app.post("/vans", postVan)
 app.post("/:owner/vans", postVanByOwner)
+app.post("/bookings", postBooking)
 
 app.all("*", (req, res) => {
   res.status(404).send({ msg: "request not found" });
