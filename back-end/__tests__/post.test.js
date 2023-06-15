@@ -139,3 +139,89 @@ describe("/vans", () => {
             });
     });
 })
+
+describe("/:owner/vans", () => {
+    test("POST - STATUS: 201 - to post a new van object to the data base", () => {
+        return request(app)
+            .post("/6489a266b97c6dfb06b758f1/vans")
+            .send({
+                vanName: "the bell bus",
+                description:
+                    "The bell bus is a great. ",
+                make: "Volkswagen",
+                model: "California",
+                year: 2021,
+                location: {
+                    region: "york",
+                    postcode: "yo231ex",
+                },
+                pricePerNight: 30,
+                amenities: ["kitchen", "sun roof", "dining area"],
+                availabilityDates: {
+                    startDate: "2023-07-01",
+                    endDate: "2024-07-01",
+                },
+                images: [
+                    "https://vanlifeadventure.com/wp-content/uploads/2019/06/vanlife-adventure-kepler-sixty-vw-camper-california-05.jpg",
+                ],
+                sleeps: 2,
+            })
+            .then((response) => {
+                const { vanName, owner, description, make, model, year, location, pricePerNight, amenities, availabilityDates, images, sleeps } = response.body.newVan;
+                expect(vanName).toBe("the bell bus");
+                expect(owner).toBe("6489a266b97c6dfb06b758f1");
+                expect(description).toBe("The bell bus is a great. ");
+                expect(make).toBe("Volkswagen");
+                expect(model).toBe("California");
+                expect(year).toBe(2021);
+                expect(location).toEqual({
+                    region: "york",
+                    postcode: "yo231ex",
+                });
+                expect(pricePerNight).toBe(30);
+                expect(amenities).toEqual(["kitchen", "sun roof", "dining area"]);
+                expect(availabilityDates.startDate.slice(0, 10)).toEqual("2023-07-01"
+                );
+                expect(images).toEqual([
+                    "https://vanlifeadventure.com/wp-content/uploads/2019/06/vanlife-adventure-kepler-sixty-vw-camper-california-05.jpg",
+                ]);
+                expect(sleeps).toBe(2);
+
+            })
+    })
+    test('to GET status 400 if try to post an empty van object', () => {
+        return request(app)
+            .post("/6489a266b97c6dfb06b758f1/vans")
+            .send({})
+            .expect(400)
+            .then((response) => {
+                expect(response.body.msg).toEqual('invalid request')
+            })
+    })
+    test("GET - status: 404 respond with correct error message if end point is not valid", () => {
+        return request(app)
+            .post("/nonsense")
+            .expect(404)
+            .then((response) => {
+                expect(response.body.msg).toBe("request not found");
+            });
+    });
+
+})
+////////////////////////////////////////
+
+describe('/api', () => {
+    test('to GET an json object containing a description of the end points, what queries can be made and an example response', () => {
+        return request(app)
+            .get('/api')
+            .expect(200)
+            .then((response) => { 
+                const epObject = response.body.endPoints["GET /users"];
+                expect(typeof epObject).toEqual('object');
+                expect(epObject.hasOwnProperty('description')).toBe(true);
+                expect(epObject.hasOwnProperty('queries')).toBe(true);
+                expect(epObject.hasOwnProperty('exampleResponse')).toBe(true);
+          
+            })
+    })
+})
