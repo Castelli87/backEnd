@@ -19,7 +19,7 @@ afterAll(async () => {
 });
 
 describe('GET /api', () => {
-  test('to GET an json object containing a description of the end points, what queries can be made and an example response', () => {
+  test('GET - STATUS:200 - respond with an json object containing a description of the end points, what queries can be made and an example response', () => {
       return request(app)
           .get('/api')
           .expect(200)
@@ -66,7 +66,7 @@ describe("GET /users", () => {
         );
       });
   });
-  test("GET - status: 404 respond with correct error message if end point is not valid", () => {
+  test("GET - STATUS: 404 - respond with correct error message if end point is not valid", () => {
     return request(app)
       .get("/nonsense")
       .expect(404)
@@ -107,7 +107,7 @@ describe("GET /users/:id", () => {
         );
       });
   });
-  test("GET - status: 400 respond with correct error message if end point is not valid", () => {
+  test("GET - STATUS: 400 - respond with correct error message if end point is not valid", () => {
     return request(app)
       .get("/users/nonsense")
       .expect(400)
@@ -115,8 +115,7 @@ describe("GET /users/:id", () => {
         expect(response.body.msg).toBe("bad request");
       });
   });
-
-  test("GET - status: 404 respond with correct error message if valid id but does not exist yet ", () => {
+  test("GET - STATUS: 404 - respond with correct error message if valid id but does not exist yet ", () => {
     return request(app)
       .get("/users/648847dd474b8491a2e59d55")
       .expect(404)
@@ -164,7 +163,7 @@ describe("GET /vans", () => {
         );
       });
   });
-  test("GET - status: 404 respond with correct error message if end point is not valid", () => {
+  test("GET - STATUS: 404 - respond with correct error message if end point is not valid", () => {
     return request(app)
       .get("/nonsense")
       .expect(404)
@@ -215,7 +214,7 @@ describe("GET /vans/:id", () => {
         ]);
       });
   });
-  test("GET - status: 400 respond with correct error message if end point is not valid", () => {
+  test("GET - STATUS: 400 - respond with correct error message if end point is not valid", () => {
     return request(app)
       .get("/vans/nonsense")
       .expect(400)
@@ -223,7 +222,7 @@ describe("GET /vans/:id", () => {
         expect(response.body.msg).toBe("bad request");
       });
   });
-  test("GET - status: 404 respond with correct error message if valid id but does not exist yet ", () => {
+  test("GET - STATUS: 404 - respond with correct error message if valid id but does not exist yet ", () => {
     return request(app)
       .get("/vans/648847dd474b8491a2e59d55")
       .expect(404)
@@ -251,7 +250,7 @@ describe("GET /vans/:id/reviews", () => {
         });
       });
   });
-  test("GET - reviews sorted by newest first, responds with correct review", () => {
+  test("GET - STATUS: 200 - reviews sorted by newest first, responds with correct review", () => {
     return request(app)
       .get("/vans/64873c83768e970eec9aa22a/reviews")
       .expect(200)
@@ -268,7 +267,7 @@ describe("GET /vans/:id/reviews", () => {
         );
       });
   });
-  test("GET - status: 400 respond with correct error message if end point is not valid", () => {
+  test("GET - STATUS: 400 - respond with correct error message if end point is not valid", () => {
     return request(app)
       .get("/vans/nonsense/reviews")
       .expect(400)
@@ -276,7 +275,7 @@ describe("GET /vans/:id/reviews", () => {
         expect(response.body.msg).toBe("bad request");
       });
   });
-  test("GET - status: 404 respond with correct error message if valid id but does not exist yet ", () => {
+  test("GET - STATUS: 404 - respond with correct error message if valid id but does not exist yet ", () => {
     return request(app)
       .get("/vans/648847dd474b8491a2e59d55/reviews")
       .expect(404)
@@ -292,11 +291,10 @@ describe("GET /vans/:id/reviews", () => {
 
         expect(response.body.reviews).toEqual([]);
       });})
-
 });
 
 describe("GET /bookings", () => {
-  test("Should return STATUS - 200 responds with a list of bookings with required properties", () => {
+  test("GET - STATUS: 200 - responds with a list of bookings with required properties", () => {
     return request(app).get("/bookings").then( ({body}) => {
       body.bookings.forEach(({userId, vanId, startDate, endDate, totalCost, paymentDetails }) => {
         expect(typeof userId).toBe("string");
@@ -308,11 +306,10 @@ describe("GET /bookings", () => {
       })
     })
   })
-  
 })
 
 describe("GET /bookings/:booking_id", () => {
-  test("STATUS - 200 and expect booking values to be as expected.", () => {
+  test("GET - STATUS: 200 - and expect booking values to be as expected.", () => {
     return request(app).get("/bookings/648b2d2cbd34fabd752b0b05").expect(200).then(({body}) => {
       const { userId, vanId, startDate, endDate, totalCost, paymentDetails } = body.booking;
 
@@ -324,20 +321,17 @@ describe("GET /bookings/:booking_id", () => {
       expect(paymentDetails).toBe("unpaid")
     })
   })
-
-  test("Should return 400 bad request if the id is not a valid string", () => {
+  test("GET - STATUS: 400 - bad request if the id is not a valid string", () => {
     return request(app).get("/bookings/648b19").expect(400).then(({body}) => {
       expect(body.msg).toBe("bad request");
     })
   })
-
-  test("Should return a 404 Not Found error if the id does not exist in the database", () => {
+  test("GET - STATUS: 400 - Not Found error if the id does not exist in the database", () => {
     return request(app).get("/bookings/648b19c7b62d2ba61de8a6f7").expect(404).then(({body}) => {
       expect(body.msg).toBe("request not found")
     })
   })
-
-  test("GET - status: 404 respond with correct error message if end point is not valid", () => {
+  test("GET - STATUS: 404 - respond with correct error message if end point is not valid", () => {
     return request(app)
       .get("/nonsense")
       .expect(404)
@@ -345,8 +339,6 @@ describe("GET /bookings/:booking_id", () => {
         expect(response.body.msg).toBe("request not found");
       });
   });
-
-
 })
 
 describe("POST /users", () => {
@@ -384,7 +376,7 @@ describe("POST /users", () => {
 
           })
   })
-  test('to GET status 400 if try to post an empty user object', () => {
+  test('POST - STATUS: 400 - if try to post an empty user object', () => {
       return request(app)
           .post("/users")
           .send({})
@@ -393,7 +385,7 @@ describe("POST /users", () => {
               expect(response.body.msg).toEqual('invalid request')
           })
   })
-  test("GET - status: 404 respond with correct error message if end point is not valid", () => {
+  test("POST - STATUS: 404 - respond with correct error message if end point is not valid", () => {
       return request(app)
           .post("/nonsense")
           .expect(404)
@@ -458,7 +450,7 @@ describe("POST /vans", () => {
 
           })
   })
-  test('to GET status 400 if try to post an empty van object', () => {
+  test('POST - STATUS: 400 - if try to post an empty van object', () => {
       return request(app)
           .post("/vans")
           .send({})
@@ -467,7 +459,7 @@ describe("POST /vans", () => {
               expect(response.body.msg).toEqual('invalid request')
           })
   })
-  test("GET - status: 404 respond with correct error message if end point is not valid", () => {
+  test("POST - STATUS: 404 - respond with correct error message if end point is not valid", () => {
       return request(app)
           .post("/nonsense")
           .expect(404)
@@ -526,7 +518,7 @@ describe("POST /:owner/vans", () => {
 
           })
   })
-  test('to GET status 400 if try to post an empty van object', () => {
+  test('POST - STATUS: 400 - if try to post an empty van object', () => {
       return request(app)
           .post("/6489a266b97c6dfb06b758f1/vans")
           .send({})
@@ -535,7 +527,7 @@ describe("POST /:owner/vans", () => {
               expect(response.body.msg).toEqual('invalid request')
           })
   })
-  test("GET - status: 400 respond with correct error message if the id is not valid", () => {
+  test("POST - STATUS: 400 - respond with correct error message if the id is not valid", () => {
       return request(app)
           .post("/nonsense/vans")
           .expect(400)
@@ -543,7 +535,7 @@ describe("POST /:owner/vans", () => {
               expect(response.body.msg).toBe("invalid request");
           });
   });
-  test("GET - status: 404 respond with correct error message if end point is not valid", () => {
+  test("POST - STATUS: 404 - respond with correct error message if end point is not valid", () => {
       return request(app)
           .post("/nonsense")
           .expect(404)
@@ -551,7 +543,7 @@ describe("POST /:owner/vans", () => {
               expect(response.body.msg).toBe("request not found");
           });
   });
-  test('to GET status 400 if try to post a object with incorrect data types', () => {
+  test('POST - STATUS: 400 - if try to post a object with incorrect data types', () => {
       return request(app)
           .post("/6489a266b97c6dfb06b758f1/vans")
           .send({
@@ -605,7 +597,7 @@ describe("POST /bookings", () => {
               expect(paymentDetails).toBe("unpaid");
           })
   })
-  test('to GET status 400 if try to post an empty booking object', () => {
+  test('POST - STATUS: 400 - if try to post an empty booking object', () => {
       return request(app)
           .post("/bookings")
           .send({})
@@ -614,7 +606,7 @@ describe("POST /bookings", () => {
               expect(response.body.msg).toEqual('invalid request')
           })
   })
-  test('to GET status 400 if try to post an booking object with incorrect data types', () => {
+  test('POST - STATUS: 400 - if try to post an booking object with incorrect data types', () => {
       return request(app)
           .post("/bookings")
           .send({
@@ -630,7 +622,7 @@ describe("POST /bookings", () => {
               expect(response.body.msg).toEqual('invalid request')
           })
   })
-  test("GET - status: 404 respond with correct error message if end point is not valid", () => {
+  test("POST - STATUS: 404 - respond with correct error message if end point is not valid", () => {
       return request(app)
           .post("/nonsense")
           .expect(404)
@@ -659,7 +651,7 @@ describe("POST /reviews", () => {
               expect(comment).toBe("rubbish");
           })
   })
-  test('to GET status 201 if try to post an review without a comment', () => {
+  test('POST - STATUS: 201 - if try to post an review without a comment', () => {
       return request(app)
           .post("/vans/64873c83768e970eec9aa22a/reviews")
           .send({
@@ -675,7 +667,7 @@ describe("POST /reviews", () => {
 
           })
   })
-  test('to GET status 400 if try to post an empty review object', () => {
+  test('POST - STATUS: 400 - if try to post an empty review object', () => {
       return request(app)
           .post("/vans/64873c83768e970eec9aa22a/reviews")
           .send({})
@@ -684,8 +676,7 @@ describe("POST /reviews", () => {
               expect(response.body.msg).toEqual('invalid request')
           })
   })
-
-  test("GET - status: 404 respond with correct error message if end point is not valid", () => {
+  test("POST - STATUS: 404 - respond with correct error message if end point is not valid", () => {
       return request(app)
           .post("/vans/64873c83768e970eec9aa22a/nonsense")
           .expect(404)
@@ -700,6 +691,7 @@ describe("PATCH /users/:id", () => {
       return request(app)
           .patch("/users/648733606b77da2cfea3e774")
           .send({ username: "changed" })
+          .expect(200)
           .then((response) => {
               const { username, password, location, firstName, lastName, email, phoneNumber, img } = response.body.updatedUser;
               expect(username).toBe("changed")
@@ -715,7 +707,7 @@ describe("PATCH /users/:id", () => {
               expect(img).toBe("https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg")
           })
   })
-  test('to GET status 400 if try and update with an empty object', () => {
+  test('PATCH- STATUS: 400 - if try and update with an empty object', () => {
       return request(app)
           .patch("/users/648733606b77da2cfea3e774")
           .send({})
@@ -724,7 +716,7 @@ describe("PATCH /users/:id", () => {
               expect(response.body.msg).toEqual('missing required fields')
           })
   })
-  test("GET - status: 400 respond with correct error message if end point is not valid", () => {
+  test("PATCH- STATUS: 400 - respond with correct error message if end point is not valid", () => {
       return request(app)
           .patch("/users/nonsense")
           .send({ username: "changed" })
@@ -733,7 +725,7 @@ describe("PATCH /users/:id", () => {
               expect(response.body.msg).toBe("bad request");
           });
   });
-  test("GET - status: 404 respond with correct error message if valid id but does not exist yet ", () => {
+  test("PATCH- STATUS: 404 - respond with correct error message if valid id but does not exist yet ", () => {
       return request(app)
           .patch("/users/648733606b77da2cfea3e776")
           .send({ username: "changed" })
@@ -742,7 +734,7 @@ describe("PATCH /users/:id", () => {
               expect(response.body.msg).toBe("request not found");
           });
   });
-  test('to GET status 400 if try and update with an wrong invalid value', () => {
+  test('PATCH- STATUS: 400 - if try and update with an wrong invalid value', () => {
       return request(app)
           .patch("/users/648733606b77da2cfea3e774")
           .send({ firstName: [] })
@@ -754,10 +746,11 @@ describe("PATCH /users/:id", () => {
 })
 
 describe("PATCH /vans/:id", () => {
-  test("PATCH- STATUS: 200 - to patch an existing van in the data base ", () => {
+test("PATCH- STATUS: 200 - to patch an existing van in the data base ", () => {
       return request(app)
           .patch("/vans/64873c83768e970eec9aa22c")
           .send({ description: "changed" })
+          .expect(200)
           .then((response) => {
               const { vanName, owner, description, make, model, year, location, pricePerNight, amenities, availabilityDates, images, sleeps } = response.body.updatedVan;
               expect(vanName).toBe("Sea Change");
@@ -783,9 +776,8 @@ describe("PATCH /vans/:id", () => {
               expect(sleeps).toBe(3);
 
           })
-  })
-
-test('to GET status 400 if try and update with an empty object', () => {
+})
+test('PATCH- STATUS: 400 - if try and update with an empty object', () => {
   return request(app)
       .patch("/vans/64873c83768e970eec9aa22c")
       .send({})
@@ -794,7 +786,7 @@ test('to GET status 400 if try and update with an empty object', () => {
           expect(response.body.msg).toEqual('missing required fields')
       })
 })
-test("GET - status: 400 respond with correct error message if end point is not valid", () => {
+test("PATCH- STATUS: 400 - respond with correct error message if end point is not valid", () => {
   return request(app)
       .patch("/vans/nonsense")
       .send({ description: "changed" })
@@ -803,7 +795,7 @@ test("GET - status: 400 respond with correct error message if end point is not v
           expect(response.body.msg).toBe("bad request");
       });
 });
-test("GET - status: 404 respond with correct error message if valid id but does not exist yet ", () => {
+test("PATCH- STATUS: 404 - respond with correct error message if valid id but does not exist yet ", () => {
   return request(app)
       .patch("/vans/64873c83768e970eec9aa22d")
       .send({ description: "changed" })
@@ -812,7 +804,7 @@ test("GET - status: 404 respond with correct error message if valid id but does 
           expect(response.body.msg).toBe("request not found");
       });
 });
-test('to GET status 400 if try and update with an wrong invalid value', () => {
+test('PATCH- STATUS: 400 - if try and update with an wrong invalid value', () => {
   return request(app)
       .patch("/vans/64873c83768e970eec9aa22c")
       .send({availabilityDates:'string'})

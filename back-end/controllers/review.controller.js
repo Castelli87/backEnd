@@ -40,4 +40,27 @@ const getReviewByVanId = async (req, res) => {
   return res.status(200).json({ reviews ,username});
 };
 
-module.exports = { getReviewByVanId };
+const postReview = async (req, res)=>{
+  const {userId, rating, comment}=req.body;
+  const {id} = req.params;
+  const newReview= new Reviews({
+      userId:userId,
+      vanId:id,
+      rating:rating,
+      comment:comment
+  })
+  try {
+      await newReview.save();
+      res.status(201).json({
+          newReview:newReview
+         
+      });
+    } catch (error) {
+    
+        return res.status(400).send({msg:'invalid request'})
+      }
+    
+
+}
+
+module.exports = { getReviewByVanId, postReview};
