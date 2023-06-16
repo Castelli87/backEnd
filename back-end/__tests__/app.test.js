@@ -240,7 +240,7 @@ describe("GET /vans/:id/reviews", () => {
       .then((response) => {
         const reviews = response.body.reviews;
         reviews.forEach(({ userId, vanId, rating, comment, createdAt }) => {
-          expect(typeof userId).toBe("string");
+          expect(typeof userId).toBe("object");
           expect(typeof vanId).toBe("string");
           expect(typeof rating).toBe("number");
           expect(typeof createdAt).toBe("string");
@@ -259,7 +259,7 @@ describe("GET /vans/:id/reviews", () => {
         const oldestReview = reviews[reviews.length - 1];
         const { userId, vanId, rating, comment } = oldestReview;
 
-        expect(userId).toBe("648733606b77da2cfea3e774");
+        expect(userId._id).toBe("648733606b77da2cfea3e774");
         expect(vanId).toBe("64873c83768e970eec9aa22a");
         expect(rating).toBe(10);
         expect(comment).toBe(
