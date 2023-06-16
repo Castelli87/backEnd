@@ -17,6 +17,7 @@ export const AdvertiseVan = () => {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       vanName: "",
@@ -41,6 +42,7 @@ export const AdvertiseVan = () => {
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setDate(currentDate);
+    setValue("startDate", selectedDate);
   };
 
   const showMode = (currentMode) => {
@@ -51,11 +53,12 @@ export const AdvertiseVan = () => {
       is24Hour: true,
     });
   };
-  console.log(date);
 
   const showDatepicker = () => {
     showMode("date");
   };
+
+  console.log(date);
 
   return (
     <ScrollView>
