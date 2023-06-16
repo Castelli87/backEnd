@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 const Bookings = require("../models/Bookings");
 
-exports.getBookings = async (req, res) => {
+const getBookings = async (req, res) => {
     const bookings = await Bookings.find({});
 
     return res.status(200).send({bookings})
 }
-
-exports.getBookingById = async (req, res, next) => {
+const getBookingById = async (req, res, next) => {
     try{
 
         
@@ -26,3 +25,6 @@ exports.getBookingById = async (req, res, next) => {
         next(err)
     }
 }
+
+
+module.exports = {getBookings, getBookingById}

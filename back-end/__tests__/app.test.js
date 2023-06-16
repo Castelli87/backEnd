@@ -61,7 +61,7 @@ describe("/users", () => {
   });
 });
 
-describe.skip("/users/:id", () => {
+describe("/users/:id", () => {
   test("GET - STATUS: 200 - respond with the specific user id", () => {
     return request(app)
       .get("/users/648733606b77da2cfea3e770")
@@ -225,13 +225,14 @@ describe("/vans/:id/reviews", () => {
       .expect(200)
       .then((response) => {
         const reviews = response.body.reviews;
-        console.log(response.body)
         reviews.forEach(({ userId, vanId, rating, comment, createdAt }) => {
           expect(typeof userId).toBe("string");
           expect(typeof vanId).toBe("string");
           expect(typeof rating).toBe("number");
-          expect(typeof comment).toBe("string");
           expect(typeof createdAt).toBe("string");
+          if(comment){
+            expect(typeof comment).toBe("string");
+          }
         });
       });
   });

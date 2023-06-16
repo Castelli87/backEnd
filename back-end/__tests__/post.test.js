@@ -198,6 +198,14 @@ describe("/:owner/vans", () => {
                 expect(response.body.msg).toEqual('invalid request')
             })
     })
+    test("GET - status: 400 respond with correct error message if the id is not valid", () => {
+        return request(app)
+            .post("/nonsense/vans")
+            .expect(400)
+            .then((response) => {
+                expect(response.body.msg).toBe("invalid request");
+            });
+    });
     test("GET - status: 404 respond with correct error message if end point is not valid", () => {
         return request(app)
             .post("/nonsense")
@@ -206,34 +214,79 @@ describe("/:owner/vans", () => {
                 expect(response.body.msg).toBe("request not found");
             });
     });
+    test('to GET status 400 if try to post a object with incorrect data types', () => {
+        return request(app)
+            .post("/6489a266b97c6dfb06b758f1/vans")
+            .send({
+                vanName: 3000,
+                description:
+                    3000,
+                make: 3000,
+                model: 3000,
+                year: 'string',
+                location: {
+                    region: "york",
+                    postcode: "yo231ex",
+                },
+                pricePerNight: 'string',
+                amenities: 3000,
+                availabilityDates: {
+                    startDate: "2023-07-01",
+                    endDate: "2024-07-01",
+                },
+                images: 3000,
+                sleeps: 'string',
+            })
+            .expect(400)
+            .then((response) => {
+                expect(response.body.msg).toEqual('invalid request')
+            })
+    })
 
 })
-describe.only("/bookings", () => {
+describe("/bookings", () => {
     test("POST - STATUS: 201 - to post a new booking object to the data base", () => {
         return request(app)
             .post("/bookings")
-            .send( {
+            .send({
                 userId: "648733606b77da2cfea3e774",
                 vanId: "64873c83768e970eec9aa22a",
                 startDate: "2023-09-01",
                 endDate: "2023-09-03",
                 totalCost: 100,
                 paymentDetails: "unpaid",
-              })
-            .then((response)=>{
-const {userId, vanId, startDate, endDate, totalCost, paymentDetails}= response.body.newBooking;
-expect(userId).toBe("648733606b77da2cfea3e774");
-expect(vanId).toBe("64873c83768e970eec9aa22a");
-expect(startDate.slice(0, 10)).toBe("2023-09-01");
-expect(endDate.slice(0, 10)).toBe("2023-09-03");
-expect(totalCost).toBe(100);
-expect(paymentDetails).toBe("unpaid");
+            })
+            .expect(201)
+            .then((response) => {
+                const { userId, vanId, startDate, endDate, totalCost, paymentDetails } = response.body.newBooking;
+                expect(userId).toBe("648733606b77da2cfea3e774");
+                expect(vanId).toBe("64873c83768e970eec9aa22a");
+                expect(startDate.slice(0, 10)).toBe("2023-09-01");
+                expect(endDate.slice(0, 10)).toBe("2023-09-03");
+                expect(totalCost).toBe(100);
+                expect(paymentDetails).toBe("unpaid");
             })
     })
     test('to GET status 400 if try to post an empty booking object', () => {
         return request(app)
             .post("/bookings")
             .send({})
+            .expect(400)
+            .then((response) => {
+                expect(response.body.msg).toEqual('invalid request')
+            })
+    })
+    test('to GET status 400 if try to post an booking object with incorrect data types', () => {
+        return request(app)
+            .post("/bookings")
+            .send({
+                userId: "648733606b77da2cfea3e774",
+                vanId: "64873c83768e970eec9aa22a",
+                startDate: 3000,
+                endDate: 3000,
+                totalCost: 'one hundred',
+                paymentDetails: 3000,
+            })
             .expect(400)
             .then((response) => {
                 expect(response.body.msg).toEqual('invalid request')
@@ -248,8 +301,61 @@ expect(paymentDetails).toBe("unpaid");
             });
     });
 })
+describe("/reviews", () => {
+    test("POST - STATUS: 201 - to post a new review object to the data base", () => {
+        return request(app)
+            .post("/vans/64873c83768e970eec9aa22a/reviews")
+            .send({
+                userId: "648733606b77da2cfea3e774",
+                rating: 1,
+                comment: 'rubbish'
+            })
+            .expect(201)
+            .then((response) => {
+                const { userId, vanId, rating, comment } = response.body.newReview;
 
+                expect(userId).toBe("648733606b77da2cfea3e774");
+                expect(vanId).toBe("64873c83768e970eec9aa22a");
+                expect(rating).toBe(1);
+                expect(comment).toBe("rubbish");
+            })
+    })
+    test('to GET status 201 if try to post an review without a comment', () => {
+        return request(app)
+            .post("/vans/64873c83768e970eec9aa22a/reviews")
+            .send({
+                userId: "648733606b77da2cfea3e774",
+                rating: 1,
 
+            })
+            .expect(201)
+            .then((response) => {
+                const { rating, userId } = response.body.newReview;
+                expect(rating).toBe(1);
+                expect(userId).toBe("648733606b77da2cfea3e774")
+
+            })
+    })
+    test('to GET status 400 if try to post an empty review object', () => {
+        return request(app)
+            .post("/vans/64873c83768e970eec9aa22a/reviews")
+            .send({})
+            .expect(400)
+            .then((response) => {
+                expect(response.body.msg).toEqual('invalid request')
+            })
+    })
+
+    test("GET - status: 404 respond with correct error message if end point is not valid", () => {
+        return request(app)
+            .post("/vans/64873c83768e970eec9aa22a/nonsense")
+            .expect(404)
+            .then((response) => {
+                expect(response.body.msg).toBe("request not found");
+            });
+    });
+})
+// need to move this below into the app.test 
 ////////////////////////////////////////
 
 describe('/api', () => {
