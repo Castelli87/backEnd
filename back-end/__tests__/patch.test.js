@@ -13,14 +13,14 @@ afterAll(async () => {
 });
 
 
-describe.only("/users/:id", () => {
+describe("/users/:id", () => {
     test("PATCH- STATUS: 200 - to patch an existing user in the data base ", () => {
         return request(app)
-            .patch("/users/648b19c74710d9c0c342200a")
-            .send({ username: "changedd" })
+            .patch("/users/648733606b77da2cfea3e774")
+            .send({ username: "changed" })
             .then((response) => {
                 const {username, password, location, firstName, lastName, email, phoneNumber, img } = response.body.updatedUser;
-                expect(username).toBe("changedd")
+                expect(username).toBe("changed")
                 expect(password).toBe("password5")
                 expect(location).toEqual( {
                     region: "liverpool",
@@ -57,16 +57,16 @@ describe.only("/users/:id", () => {
           .send({ username: "changedd" })
           .expect(404)
           .then((response) => {
-            expect(response.body.error).toBe("request not found");
+            expect(response.body.msg).toBe("request not found");
           });
       });
-    // test.only('to GET status 400 if try and update with an wrong invalid value', () => {
-    //     return request(app)
-    //         .patch("/users/648ae6c925d5f38a3d67dc67")
-    //         .send({firstName:4})
-    //         .expect(400)
-    //         .then((response) => {
-    //             expect(response.body.msg).toBe('invalid request');
-    //         })
-    // })
+    test.only('to GET status 400 if try and update with an wrong invalid value', () => {
+        return request(app)
+            .patch("/users/648ae6c925d5f38a3d67dc67")
+            .send({firstName:4})
+            .expect(400)
+            .then((response) => {
+                expect(response.body.msg).toBe('invalid request');
+            })
+    })
 })

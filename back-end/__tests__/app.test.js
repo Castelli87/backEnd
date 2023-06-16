@@ -225,7 +225,6 @@ describe("/vans/:id/reviews", () => {
       .expect(200)
       .then((response) => {
         const reviews = response.body.reviews;
-        console.log(response.body)
         reviews.forEach(({ userId, vanId, rating, comment, createdAt }) => {
           expect(typeof userId).toBe("string");
           expect(typeof vanId).toBe("string");
