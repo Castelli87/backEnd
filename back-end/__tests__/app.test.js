@@ -61,7 +61,7 @@ describe("/users", () => {
   });
 });
 
-describe.skip("/users/:id", () => {
+describe("/users/:id", () => {
   test("GET - STATUS: 200 - respond with the specific user id", () => {
     return request(app)
       .get("/users/648733606b77da2cfea3e770")

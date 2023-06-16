@@ -72,7 +72,7 @@ describe("/users/:id", () => {
 })
 
 
-describe.only("/vans/:id", () => {
+describe("/vans/:id", () => {
     test("PATCH- STATUS: 200 - to patch an existing van in the data base ", () => {
         return request(app)
             .patch("/vans/64873c83768e970eec9aa22c")
@@ -131,7 +131,7 @@ test("GET - status: 404 respond with correct error message if valid id but does 
             expect(response.body.msg).toBe("request not found");
         });
 });
-test.only('to GET status 400 if try and update with an wrong invalid value', () => {
+test('to GET status 400 if try and update with an wrong invalid value', () => {
     return request(app)
         .patch("/vans/64873c83768e970eec9aa22c")
         .send({availabilityDates:'string'})
