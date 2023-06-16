@@ -21,3 +21,12 @@ export const getCamperVan = async (id) => {
     console.log(err);
   }
 };
+
+export const postVanBooking = async (data) => {
+  try {
+    const booking = await instance.post(`/bookings`, data);
+    return booking;
+  } catch (err) {
+    console.log(err);
+  }
+};

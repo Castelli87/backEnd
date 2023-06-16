@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { getCamperVan } from "../api";
+import { BookingForm } from "../components/BookingForm";
 
 export const IndividualVan = ({ route, navigation }) => {
   const [van, setVan] = useState({});
@@ -37,9 +38,10 @@ export const IndividualVan = ({ route, navigation }) => {
           <>
             <Text style={styles.title}>{van.vanName}</Text>
             <Text>£{van.pricePerNight} per night</Text>
-            {van.images.map((image) => {
+            {van.images.map((image, index) => {
               return (
                 <Image
+                  key={index}
                   style={{ width: 150, height: 150 }}
                   source={{
                     uri: image,
@@ -67,10 +69,13 @@ export const IndividualVan = ({ route, navigation }) => {
                 )}
               />
             ) : null}
+            <BookingForm
+              pricePerNight={van.pricePerNight}
+              id={van._id}
+            ></BookingForm>
           </>
         }
       />
-      <Button title="Book now!" onPress={() => navigate("Home")} />
     </View>
   );
 };
