@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const User = require("../models/User");
+const Van = require("../models/Van");
 
 
-const patchUser = async (req, res) => {
+const patchVan = async (req, res)=>{
     try {
         const { id } = req.params;
-        const updatedData = req.body
+        const updatedData = req.body;
 
         if (!mongoose.isValidObjectId(id)) {
             return res.status(400).json({ msg: "bad request" });
@@ -14,20 +14,21 @@ const patchUser = async (req, res) => {
             return res.status(400).send({ msg: 'missing required fields' })
         }
 
-        const user = await User.findById(id);
-        if (!user) {
+        const van = await Van.findById(id);
+    
+        if (!van) {
             return res.status(404).json({ msg: 'request not found' });
         }
 
-        Object.assign(user, updatedData);
+        Object.assign(van, updatedData);
 
-        const validationError = user.validateSync();
+        const validationError = van.validateSync();
         if (validationError) {
             return res.status(400).json({ msg: 'invalid request' });
         }
 
-        const updatedUser = await user.save();
-        res.json({ updatedUser: updatedUser });
+        const updatedVan = await van.save();
+        res.json({ updatedVan: updatedVan });
 
 
     } catch (error) {
@@ -36,9 +37,4 @@ const patchUser = async (req, res) => {
 }
 
 
-
-module.exports = { patchUser }
-
-
-
-
+module.exports = {patchVan};
