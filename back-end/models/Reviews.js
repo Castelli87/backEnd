@@ -18,6 +18,10 @@ const ReviewsSchema = new mongoose.Schema({
   comment: {
     type: String,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model("reviews", ReviewsSchema);

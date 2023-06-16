@@ -7,6 +7,12 @@ const reviews = [
       "Absolutely loved our experience with the Volkswagen California campervan! It was spacious, comfortable, and had all the amenities we needed for our road trip. The pop-up roof provided extra headroom, and the fully equipped kitchenette made cooking on the go a breeze. The campervan was in excellent condition, and the rental process was smooth. Highly recommend this campervan for anyone seeking adventure and comfort!",
   },
   {
+    userId: "648733606b77da2cfea3e774",
+    vanId: "64873c83768e970eec9aa22a",
+    rating: 8,
+    comment: "Was fab",
+  },
+  {
     userId: "648733606b77da2cfea3e773",
     vanId: "64873c83768e970eec9aa22b",
     rating: 10,
