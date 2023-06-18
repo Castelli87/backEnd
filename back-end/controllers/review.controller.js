@@ -3,41 +3,50 @@ const Reviews = require("../models/Reviews");
 const Van = require("../models/Van");
 const User=require("../models/User")
 
-/* async function getReviewWithUsername(reviewId) {
-  try {
-    const review = await Review.findById(reviewId).populate('user');
-    if (review && review.user) {
-      const { username } = review.user;
-      console.log('Username:', username);
-    } else {
-      console.log('Review not found or user not associated');
-    }
-  } catch (error) {
-    console.log('Error:', error.message);
-  }
-} */
-
-
 const getReviewByVanId = async (req, res) => {
   const { id } = req.params;
+//check if is a valid objectID
   if (!mongoose.isValidObjectId(id)) {
     return res.status(400).json({ msg: "bad request" });
   }
-  const van = await Van.findById(id);
-
+//check if is already used this Id
+  const van = await Van.findById(id)
   if (!van) {
     return res.status(404).json({ error: "request not found" });
   }
-  /* getReviewWithUsername() */
-
-  const reviews = await Reviews.find({ vanId: van }).sort({
+//find reviews by the vanId sorting in a ascending way and JOIN the username to the userId
+  const reviews = await Reviews.find({ vanId:id }).sort({
     createdAt: -1,
-  });
-  const username = await User.find({userId:reviews.userId})
+  }).populate({
+    path: 'userId',
+    select: 'username',
+    model: User,
+  })
 
-
-
-  return res.status(200).json({ reviews ,username});
+  return res.status(200).json({ reviews:reviews});
 };
 
-module.exports = { getReviewByVanId };
+const postReview = async (req, res)=>{
+  const {userId, rating, comment}=req.body;
+  const {id} = req.params;
+  const newReview= new Reviews({
+      userId:userId,
+      vanId:id,
+      rating:rating,
+      comment:comment
+  })
+  try {
+      await newReview.save();
+      res.status(201).json({
+          newReview:newReview
+         
+      });
+    } catch (error) {
+    
+        return res.status(400).send({msg:'invalid request'})
+      }
+    
+
+}
+
+module.exports = { getReviewByVanId, postReview};
