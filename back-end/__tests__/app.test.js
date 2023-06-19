@@ -953,7 +953,7 @@ describe("GET /vans queries", () => {
     })
   })
   describe("/vans/:id", () => {
-    test("DELETE- STATUS: 200 - to delete an existing van in the data base ", () => {
+    test("DELETE - STATUS: 200 - to delete an existing van in the data base ", () => {
         return request(app)
             .delete("/vans/64873c83768e970eec9aa22a")
             .expect(200)
@@ -962,7 +962,7 @@ describe("GET /vans queries", () => {
             expect(message).toBe('van deleted')
             })
     })
-    test("GET - STATUS: 400 - respond with correct error message if end point is not valid", () => {
+    test("DELETE - STATUS: 400 - respond with correct error message if end point is not valid", () => {
       return request(app)
         .delete("/vans/nonsense")
         .expect(400)
@@ -970,7 +970,7 @@ describe("GET /vans queries", () => {
           expect(response.body.msg).toBe("bad request");
         });
     });
-    test("GET - STATUS: 404 - respond with correct error message if valid id but does not exist yet ", () => {
+    test("DELETE - STATUS: 404 - respond with correct error message if valid id but does not exist yet ", () => {
       return request(app)
         .delete("/vans/648847dd474b8491a2e59d55")
         .expect(404)
