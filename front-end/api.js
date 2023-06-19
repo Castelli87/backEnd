@@ -30,3 +30,12 @@ export const postVanBooking = async (data) => {
     console.log(err);
   }
 };
+
+export const getBookingById = async (bookingId) => {
+  try {
+    const bookingById = await instance.get(`/bookings/${bookingId}`);
+    return bookingById;
+  } catch (err) {
+    console.log(err);
+  }
+};

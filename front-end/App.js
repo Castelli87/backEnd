@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {createDrawerNavigator} from "@react-navigation/drawer"
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import Home from "./pages/Home";
 import { UserProfile } from "./pages/UserProfile";
 import { Vans } from "./pages/Vans";
@@ -14,6 +14,7 @@ import { Register } from "./pages/Register";
 import { Login } from "./components/Login";
 import { AdvertiseVan } from "./pages/AdvertiseVan";
 import { IndividualVan } from "./pages/IndividualVan";
+import { BookingConfirmation } from "./pages/BookingConfirmation";
 
 const Drawer = createDrawerNavigator();
 
@@ -41,6 +42,10 @@ export default function App() {
         <Drawer.Screen name="Vans" component={Vans} />
         <Drawer.Screen name="Register" component={Register} />
         <Drawer.Screen name="AdvertiseVan" component={AdvertiseVan} />
+        <Drawer.Screen
+          name="BookingConfirmation"
+          component={BookingConfirmation}
+        />
         <Drawer.Screen
           name="Login"
           component={Login}
