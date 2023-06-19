@@ -71,6 +71,8 @@ export const IndividualVan = ({ route, navigation }) => {
             ) : null}
             <BookingForm
               pricePerNight={van.pricePerNight}
+              vanName={van.vanName}
+              image={van.images[0]}
               id={van._id}
             ></BookingForm>
           </>
