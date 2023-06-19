@@ -13,6 +13,7 @@ import { Register } from "./pages/Register";
 import { Login } from "./components/Login";
 import { AdvertiseVan } from "./pages/AdvertiseVan";
 import { IndividualVan } from "./pages/IndividualVan";
+import { BookingConfirmation } from "./pages/BookingConfirmation";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,10 @@ export default function App() {
         <Stack.Screen name="Vans" component={Vans} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="AdvertiseVan" component={AdvertiseVan} />
+        <Stack.Screen
+          name="BookingConfirmation"
+          component={BookingConfirmation}
+        />
         <Stack.Screen
           name="Login"
           component={Login}
