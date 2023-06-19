@@ -119,4 +119,20 @@ const patchVan = async (req, res)=>{
   }
 }
 
-module.exports = { getVans, getVanById,postVanByOwner,postVan,patchVan};
+
+const deleteVanById = async (req, res)=>{
+  const {id}=req.params
+  
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ msg: "bad request" });
+  }
+  const vanToDelete = await Van.findOneAndDelete(id);
+  if (!vanToDelete) {
+    return res.status(404).json({ msg: 'request not found' });
+}
+res.status(200).send({deletedVan:vanToDelete})
+ 
+  }
+ 
+
+module.exports = { getVans, getVanById,postVanByOwner,postVan,patchVan,deleteVanById};

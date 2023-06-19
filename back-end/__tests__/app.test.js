@@ -815,3 +815,14 @@ test('PATCH- STATUS: 400 - if try and update with an wrong invalid value', () =>
 })
 })
 
+describe("/vans/:id", () => {
+  test("DELETE- STATUS: 200 - to patch an existing van in the data base ", () => {
+      return request(app)
+          .delete("/vans/64901afb9f59f8b1a7cec7de")
+          .expect(200)
+          .then((response) => { 
+            console.log(response.body.deleteVan);
+          })
+  })
+})
+

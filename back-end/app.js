@@ -3,11 +3,10 @@ const mongoose = require("mongoose");
 const app = express();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const { getUsers, getUserById,postUser,patchUser } = require("./controllers/user.controller");
-const { getVans, getVanById,postVanByOwner,postVan,patchVan } = require("./controllers/van.controller");
+const { getVans, getVanById,postVanByOwner,postVan,patchVan, deleteVanById } = require("./controllers/van.controller");
 const { getReviewByVanId,postReview} = require("./controllers/review.controller");
 const { getApi } = require("./controllers/api.controller");
 const { getBookings, getBookingById,postBooking} = require("./controllers/booking.controller");
-const { deleteVanById } = require("./controllers/delete.controller");
 app.use(express.json());
 
 // implement dot env to read env variables
