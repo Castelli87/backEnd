@@ -16,9 +16,9 @@ export const Vans = () => {
 
   return (
     <ScrollView>
-      {campervans.map((campervan) => {
+      {campervans.map((campervan, index) => {
         return (
-          <>
+          <View key={index}>
             <Text>{campervan.vanName}</Text>
             <Image
               style={{ width: 150, height: 150 }}
@@ -35,7 +35,7 @@ export const Vans = () => {
                 })
               }
             ></Button>
-          </>
+          </View>
         );
       })}
     </ScrollView>

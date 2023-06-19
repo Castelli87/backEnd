@@ -1,20 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const UserModel = require("./models/User");
-const User = require("./models/User");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const { getUsers, getUserById } = require("./controllers/user.controller");
-const { getVans, getVanById } = require("./controllers/van.controller");
-const { getReviewByVanId } = require("./controllers/review.controller");
-const { postVan, postVanByOwner } = require('./controllers/postVan.controller');
-const { postUser } = require("./controllers/postUser.controller");
+const { getUsers, getUserById,postUser,patchUser } = require("./controllers/user.controller");
+const { getVans, getVanById,postVanByOwner,postVan,patchVan } = require("./controllers/van.controller");
+const { getReviewByVanId,postReview} = require("./controllers/review.controller");
 const { getApi } = require("./controllers/api.controller");
-const { postBooking } = require("./controllers/postBooking.controller");
-const { postReview } = require("./controllers/postReview.controller");
-const { patchUser } = require("./controllers/patchUser.controller");
-const { getBookings, getBookingById } = require("./controllers/getBookings.controller");
-const { patchVan } = require("./controllers/patchVans.contoller");
+const { getBookings, getBookingById,postBooking} = require("./controllers/booking.controller");
 const { deleteVanById } = require("./controllers/delete.controller");
 app.use(express.json());
 
