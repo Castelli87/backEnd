@@ -817,6 +817,7 @@ describe("PATCH /vans/:id", () => {
 })
 
 
+
 describe("GET /vans queries", () => {
   test("GET - STATUS: 200 - and filters van by make query", () => {
     return request(app).get("/vans?make=Volkswagen").expect(200).then(response => {
@@ -889,9 +890,9 @@ describe("GET /vans queries", () => {
     return request(app).get("/vans?pricePerNightgte=50&region=birmingham").expect(200).then(response => {
       const vans = response.body.allVans;
       
-        vans.forEach(van => {
-          expect(van.pricePerNight <= 50).toBe(true);
-          expect(van.region).toBe("birmingham");
+      vans.forEach(van => {
+        expect(van.pricePerNight <= 50).toBe(true);
+        expect(van.region).toBe("birmingham");
         })
       })
     })
@@ -929,9 +930,9 @@ describe("GET /vans queries", () => {
             "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg"
           );
         });
-    });
-    test('POST - STATUS: 401 - if incorrect username or password is used return correct error message ', () => {
-      return request(app)
+      });
+      test('POST - STATUS: 401 - if incorrect username or password is used return correct error message ', () => {
+        return request(app)
         .post("/login")
         .send({ username: 'username1', password: 'password2' })
         .expect(401)
@@ -942,17 +943,43 @@ describe("GET /vans queries", () => {
     })
     test('POST - STATUS: 401 - if the user does not exist return correct error message', () => {
       return request(app)
-        .post("/login")
-        .send({ username: 'invalid', password: 'password2' })
-        .expect(401)
-        .then((response) => {
-          const message = response.body.message;
-          console.log(message);
-          expect(message).toBe('Invalid credentials')
-        })
+      .post("/login")
+      .send({ username: 'invalid', password: 'password2' })
+      .expect(401)
+      .then((response) => {
+        const message = response.body.message;
+        expect(message).toBe('Invalid credentials')
+      })
     })
-})
-// test("GET - STATUS: 200 - works with 2 gte and lte for value", () => {
+  })
+  describe("/vans/:id", () => {
+    test("DELETE - STATUS: 200 - to delete an existing van in the data base ", () => {
+        return request(app)
+            .delete("/vans/64873c83768e970eec9aa22a")
+            .expect(200)
+            .then((response) => { 
+            const {message}= response.body;
+            expect(message).toBe('van deleted')
+            })
+    })
+    test("DELETE - STATUS: 400 - respond with correct error message if end point is not valid", () => {
+      return request(app)
+        .delete("/vans/nonsense")
+        .expect(400)
+        .then((response) => {
+          expect(response.body.msg).toBe("bad request");
+        });
+    });
+    test("DELETE - STATUS: 404 - respond with correct error message if valid id but does not exist yet ", () => {
+      return request(app)
+        .delete("/vans/648847dd474b8491a2e59d55")
+        .expect(404)
+        .then((response) => {
+          expect(response.body.error).toBe("request not found");
+        });
+      })
+  })
+  // test("GET - STATUS: 200 - works with 2 gte and lte for value", () => {
   //   return request(app).get("/vans").expect(200).then( response => {
     //     const vans = response.body.allVans;
     
@@ -961,6 +988,7 @@ describe("GET /vans queries", () => {
       //       expect(van.pricePerNight >= 50).toBe(true);
       //     })
       //   })
-  // })
-// })
-
+      // })
+      // })
+      
+      

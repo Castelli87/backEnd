@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const app = express();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const { getUsers, getUserById,loginByUsername, postUser,patchUser } = require("./controllers/user.controller");
-const { getVans, getVanById,postVanByOwner,postVan,patchVan } = require("./controllers/van.controller");
+const { getVans, getVanById,postVanByOwner,postVan,patchVan, deleteVanById } = require("./controllers/van.controller");
 const { getReviewByVanId,postReview} = require("./controllers/review.controller");
 const { getApi } = require("./controllers/api.controller");
 const { getBookings, getBookingById,postBooking} = require("./controllers/booking.controller");
@@ -42,6 +42,8 @@ app.post("/vans/:id/reviews", postReview);
 
 app.patch("/users/:id", patchUser)
 app.patch("/vans/:id",patchVan)
+
+app.delete('/vans/:id', deleteVanById)
 
 
 

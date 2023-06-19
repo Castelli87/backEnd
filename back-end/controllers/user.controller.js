@@ -37,36 +37,10 @@ const loginByUsername = async (req, res)=>{
     return res.status(401).json({ message: 'Invalid credentials' });
   }
   if (user.password !== password) {
-    console.log('or herree');
     return res.status(401).json({ message: 'Invalid credentials' });
   }
   return res.status(200).send({ message: 'Login successful', user:user });
 };
-
-
-// Get user by username
-// const getUserByUsername = (username) => {
-//   return users.find(user => user.username === username);
-// };
-// Login controller
-// const login = (req, res) => {
-//   const { username, password } = req.body;
-  // Find user by username
-//   const user = getUserByUsername(username);
-//   // User not found
-//   if (!user) {
-//     return res.status(401).json({ message: 'Invalid credentials' });
-//   }
-//   // Check password
-//   if (user.password !== password) {
-//     return res.status(401).json({ message: 'Invalid credentials' });
-//   }
-//   // Login successful
-//   return res.json({ message: 'Login successful' });
-// // };
-// module.exports = {
-//   login
-// };
 const postUser = async (req, res) =>{
   const  {username,password,location,firstName,lastName,email,phoneNumber,img}=req.body;
   const newUser = new User({
@@ -90,7 +64,7 @@ const postUser = async (req, res) =>{
           return res.status(400).send({msg:'invalid request'})
         }
       
-}
+};
 
 const patchUser = async (req, res) => {
   try {
@@ -123,6 +97,6 @@ const patchUser = async (req, res) => {
   } catch (error) {
       console.log(error);
   }
-}
+};
 
 module.exports = { getUsers, getUserById, loginByUsername,postUser,patchUser};
