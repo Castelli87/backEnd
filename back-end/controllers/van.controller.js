@@ -2,8 +2,38 @@ const mongoose = require("mongoose");
 const Van = require("../models/Van");
 
 const getVans = async (req, res) => {
+  const filters = {}
+  if(req.query){
+    Object.keys(req.query).forEach((query) => {
+      switch(query){
+      case "make":
+        filters.make = req.query.make;
+        break;
+      case "model":
+        filters.model = req.query.model;
+        break;
+      case "region":
+        filters["location.region"] = req.query.region;
+        break;
+      case "postcode":
+        filters["location.postcode"] = req.query.postcode;
+        break;
+      case "sleeps":
+        filters.sleeps = req.query.sleeps;
+        break;
+      case "pricePerNightgte":
+        filters["pricePerNight"] = {  $gte: req.query.pricePerNightgte};
+        break;
+      case "pricePerNightlte":
+        filters["pricePerNight"] = {$lte: req.query.pricePerNightlte};
+        break;
+    }
+    })
+    
+  }
+
   try {
-    const allVans = await Van.find({});
+    const allVans = await Van.find({...filters});
     res.status(200).json({ allVans });
   } catch (err) {
     console.log(err);
