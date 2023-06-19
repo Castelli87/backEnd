@@ -948,20 +948,36 @@ describe("GET /vans queries", () => {
       .expect(401)
       .then((response) => {
         const message = response.body.message;
-        console.log(message);
         expect(message).toBe('Invalid credentials')
       })
     })
   })
   describe("/vans/:id", () => {
-    test("DELETE- STATUS: 200 - to patch an existing van in the data base ", () => {
+    test("DELETE- STATUS: 200 - to delete an existing van in the data base ", () => {
         return request(app)
-            .delete("/vans/64901afb9f59f8b1a7cec7de")
+            .delete("/vans/64873c83768e970eec9aa22a")
             .expect(200)
             .then((response) => { 
-              console.log(response.body.deleteVan);
+            const {message}= response.body;
+            expect(message).toBe('van deleted')
             })
     })
+    test("GET - STATUS: 400 - respond with correct error message if end point is not valid", () => {
+      return request(app)
+        .delete("/vans/nonsense")
+        .expect(400)
+        .then((response) => {
+          expect(response.body.msg).toBe("bad request");
+        });
+    });
+    test("GET - STATUS: 404 - respond with correct error message if valid id but does not exist yet ", () => {
+      return request(app)
+        .delete("/vans/648847dd474b8491a2e59d55")
+        .expect(404)
+        .then((response) => {
+          expect(response.body.error).toBe("request not found");
+        });
+      })
   })
   // test("GET - STATUS: 200 - works with 2 gte and lte for value", () => {
   //   return request(app).get("/vans").expect(200).then( response => {
