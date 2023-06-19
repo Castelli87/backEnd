@@ -814,4 +814,69 @@ test('PATCH- STATUS: 400 - if try and update with an wrong invalid value', () =>
       })
 })
 })
+describe("POST /login", ()=>{
+  test('POST - STATUS: 201 - if correct username and password is used', ()=>{
+    return request(app)
+          .post("/login")
+          .send({username:'username1',password:'password1'})
+          .expect(200)
+          .then((response)=>{
+            const {
+              location,
+              username,
+              firstName,
+              lastName,
+              email,
+              password,
+              phoneNumber,
+              img,
+            } = response.body.user;
+            expect(location).toEqual({
+              region: "barnsley",
+              postcode: "s704qr",
+            });
+            expect(username).toBe("username1");
+            expect(firstName).toBe("Ezekiel");
+            expect(lastName).toBe("Hawkins");
+            expect(email).toBe("magna.ut@outlook.org");
+            expect(password).toBe("password1");
+            expect(phoneNumber).toBe("07396650881");
+            expect(img).toBe(
+              "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg"
+            );
+          });
+      });
+      test('POST - STATUS: 201 - if correct username and password is used', ()=>{
+        return request(app)
+              .post("/login")
+              .send({username:'username1',password:'password1'})
+              .expect(200)
+              .then((response)=>{
+                const {
+                  location,
+                  username,
+                  firstName,
+                  lastName,
+                  email,
+                  password,
+                  phoneNumber,
+                  img,
+                } = response.body.user;
+                expect(location).toEqual({
+                  region: "barnsley",
+                  postcode: "s704qr",
+                });
+                expect(username).toBe("username1");
+                expect(firstName).toBe("Ezekiel");
+                expect(lastName).toBe("Hawkins");
+                expect(email).toBe("magna.ut@outlook.org");
+                expect(password).toBe("password1");
+                expect(phoneNumber).toBe("07396650881");
+                expect(img).toBe(
+                  "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg"
+                );
+              });
+          });
+          })
+
 
