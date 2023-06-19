@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: `http://192.168.1.103:3000`,
+  baseURL: `http://192.168.0.42:3000`,
 });
 
 export const getCampervans = async () => {

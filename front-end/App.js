@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import Home from "./pages/Home";
 import { UserProfile } from "./pages/UserProfile";
 import { Vans } from "./pages/Vans";
@@ -15,7 +16,7 @@ import { AdvertiseVan } from "./pages/AdvertiseVan";
 import { IndividualVan } from "./pages/IndividualVan";
 import { BookingConfirmation } from "./pages/BookingConfirmation";
 
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   // const fecthApi = () => {
@@ -35,24 +36,23 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Nav></Nav>
-      <Stack.Navigator initialRouteName="Home" headerBackTitle="back">
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="UserProfile" component={UserProfile} />
-        <Stack.Screen name="Vans" component={Vans} />
-        <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="AdvertiseVan" component={AdvertiseVan} />
-        <Stack.Screen
+      <Drawer.Navigator initialRouteName="Home" headerBackTitle="back">
+        <Drawer.Screen name="Home" component={Home} />
+        <Drawer.Screen name="UserProfile" component={UserProfile} />
+        <Drawer.Screen name="Vans" component={Vans} />
+        <Drawer.Screen name="Register" component={Register} />
+        <Drawer.Screen name="AdvertiseVan" component={AdvertiseVan} />
+        <Drawer.Screen
           name="BookingConfirmation"
           component={BookingConfirmation}
         />
-        <Stack.Screen
+        <Drawer.Screen
           name="Login"
           component={Login}
           options={{ presentation: "modal" }}
         />
-        <Stack.Screen name="IndividualVan" component={IndividualVan} />
-      </Stack.Navigator>
+        <Drawer.Screen name="IndividualVan" component={IndividualVan} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
