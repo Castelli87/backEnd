@@ -34,11 +34,8 @@ const loginByUsername = async (req, res)=>{
   const { username, password } = req.body;
   const user = getUserByUsername(username);
   if (!user) {
-    console.log('here ');
     return res.status(401).json({ message: 'Invalid credentials' });
   }
-  console.log(user);
-  console.log({userP:user.password, pass:password});
   if (user.password !== password) {
     console.log('or herree');
     return res.status(401).json({ message: 'Invalid credentials' });
