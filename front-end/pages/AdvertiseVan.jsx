@@ -17,6 +17,7 @@ export const AdvertiseVan = () => {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       vanName: "",
@@ -34,13 +35,23 @@ export const AdvertiseVan = () => {
       images: "",
     },
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date());
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setDate(currentDate);
+    const year = selectedDate.getFullYear();
+    let month = selectedDate.getMonth() + 1;
+    let day = selectedDate.getDate();
+
+    if (month < 10) month = `0${month}`;
+    if (day < 10) day = `0${day}`;
+
+    setValue("startDate", `${year}-${month}-${day}`);
   };
 
   const showMode = (currentMode) => {
@@ -51,7 +62,6 @@ export const AdvertiseVan = () => {
       is24Hour: true,
     });
   };
-  console.log(date);
 
   const showDatepicker = () => {
     showMode("date");
@@ -192,11 +202,6 @@ export const AdvertiseVan = () => {
         name="amenities"
       />
 
-      {/* <View>
-        <Button onPress={showDatepicker} title="Please pick start Date" />
-        <Text>selected: {date.toLocaleString()}</Text>
-      </View> */}
-
       <Controller
         control={control}
         rules={{
@@ -219,9 +224,10 @@ export const AdvertiseVan = () => {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            placeholder="availability end date"
+            placeholder="availability end date - YY-MM-DD"
             onBlur={onBlur}
             onChangeText={onChange}
+            keyboardType="number-pad"
             value={value}
           />
         )}
