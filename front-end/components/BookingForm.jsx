@@ -2,8 +2,10 @@ import { Text, View, Button, TextInput } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
 import { postVanBooking } from "../api";
+import { useNavigation } from "@react-navigation/native";
 
-export const BookingForm = ({ pricePerNight, id }) => {
+export const BookingForm = ({ pricePerNight, id, vanName, image }) => {
+  const { navigate } = useNavigation();
   const [totalCost, setTotalCost] = useState(0);
   const {
     control,
@@ -39,7 +41,12 @@ export const BookingForm = ({ pricePerNight, id }) => {
     data.vanId = id;
     data.paymentDetails = "unpaid";
     postVanBooking(data).then(({ data }) => {
-      console.log(data);
+      console.log(vanName);
+      navigate("BookingConfirmation", {
+        bookingId: data.newBooking._id,
+        vanName: vanName,
+        image: image,
+      });
     });
   };
 

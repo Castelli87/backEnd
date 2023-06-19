@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const { getUsers, getUserById,postUser,patchUser } = require("./controllers/user.controller");
+const { getUsers, getUserById,loginByUsername, postUser,patchUser } = require("./controllers/user.controller");
 const { getVans, getVanById,postVanByOwner,postVan,patchVan, deleteVanById } = require("./controllers/van.controller");
 const { getReviewByVanId,postReview} = require("./controllers/review.controller");
 const { getApi } = require("./controllers/api.controller");
@@ -24,6 +24,7 @@ mongoose
 
 app.get("/users", getUsers);
 app.get("/users/:id", getUserById);
+app.post("/login", loginByUsername)
 
 app.get("/vans", getVans);
 app.get("/vans/:id", getVanById);
