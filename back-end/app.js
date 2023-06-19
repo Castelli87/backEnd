@@ -15,6 +15,7 @@ const { postReview } = require("./controllers/postReview.controller");
 const { patchUser } = require("./controllers/patchUser.controller");
 const { getBookings, getBookingById } = require("./controllers/getBookings.controller");
 const { patchVan } = require("./controllers/patchVans.contoller");
+const { deleteVanById } = require("./controllers/delete.controller");
 app.use(express.json());
 
 // implement dot env to read env variables
@@ -49,6 +50,8 @@ app.post("/vans/:id/reviews", postReview);
 
 app.patch("/users/:id", patchUser)
 app.patch("/vans/:id",patchVan)
+
+app.delete('/vans/:id', deleteVanById)
 
 
 
