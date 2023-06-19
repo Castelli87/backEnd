@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("../models/User");
+const users = require ("../data/users");
 
 const getUsers = async (req, res) => {
   try {
@@ -24,5 +25,78 @@ const getUserById = async (req, res) => {
   }
   res.status(200).json(userById);
 };
+const getUserByUsername = (username) => {
 
-module.exports = { getUsers, getUserById };
+ return users.users.find((user)=>user.username===username)
+  };
+
+const loginByUsername = async (req, res)=>{
+  const { username, password } = req.body;
+  const user = getUserByUsername(username);
+  if (!user) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+  if (user.password !== password) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+  return res.status(200).send({ message: 'Login successful', user:user });
+};
+const postUser = async (req, res) =>{
+  const  {username,password,location,firstName,lastName,email,phoneNumber,img}=req.body;
+  const newUser = new User({
+    username:username,
+    password:password,
+    location:location,
+    firstName:firstName,
+    lastName:lastName,
+    email:email,
+    phoneNumber:phoneNumber,
+    img:img
+  })
+  try {
+        await newUser.save();
+        res.status(201).json({
+            newUser: newUser
+           
+        });
+      } catch (error) {
+      
+          return res.status(400).send({msg:'invalid request'})
+        }
+      
+};
+
+const patchUser = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const updatedData = req.body
+
+      if (!mongoose.isValidObjectId(id)) {
+          return res.status(400).json({ msg: "bad request" });
+      }
+      if (Object.keys(updatedData).length === 0) {
+          return res.status(400).send({ msg: 'missing required fields' })
+      }
+
+      const user = await User.findById(id);
+      if (!user) {
+          return res.status(404).json({ msg: 'request not found' });
+      }
+
+      Object.assign(user, updatedData);
+
+      const validationError = user.validateSync();
+      if (validationError) {
+          return res.status(400).json({ msg: 'invalid request' });
+      }
+
+      const updatedUser = await user.save();
+      res.json({ updatedUser: updatedUser });
+
+
+  } catch (error) {
+      console.log(error);
+  }
+};
+
+module.exports = { getUsers, getUserById, loginByUsername,postUser,patchUser};
