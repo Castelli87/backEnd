@@ -816,15 +816,15 @@ test('PATCH- STATUS: 400 - if try and update with an wrong invalid value', () =>
 })
 
 describe("GET /vans queries", () => {
-  test("GET - STATUS: 200 - and filters van by van_make query", () => {
-    return request(app).get("/vans?van_make=Volkswagen").expect(200).then( response => {
+  test("GET - STATUS: 200 - and filters van by make query", () => {
+    return request(app).get("/vans?make=Volkswagen").expect(200).then( response => {
       const vans = response.body.allVans;
       vans.forEach( van => expect(van.make).toBe("Volkswagen") );
     })
   })
 
-  test("GET - STATUS: 200 - and filters van by van_model", () => {
-    return request(app).get("/vans?van_model=Sprinter").expect(200).then(response => {
+  test("GET - STATUS: 200 - and filters van by model", () => {
+    return request(app).get("/vans?model=Sprinter").expect(200).then(response => {
       const vans = response.body.allVans;
 
       vans.forEach((van) => {
@@ -883,16 +883,16 @@ describe("GET /vans queries", () => {
     })
   })
 
-  // test("GET - STATUS: 200 - works with 2 filters", () => {
-  //   return request(app).get("/vans?pricePerNightlte=50&region=birmingham").expect(200).then( response => {
-  //     const vans = response.body.allVans;
+  test("GET - STATUS: 200 - works with 2 filters", () => {
+    return request(app).get("/vans?pricePerNightgte=50&region=birmingham").expect(200).then( response => {
+      const vans = response.body.allVans;
 
-  //     vans.forEach( van => {
-  //       expect(van.pricePerNight <= 50).toBe(true);
-  //       expect(van.region).toBe("portsmouth");
-  //     })
-  //   })
-  // })
+      vans.forEach( van => {
+        expect(van.pricePerNight <= 50).toBe(true);
+        expect(van.region).toBe("birmingham");
+      })
+    })
+  })
 
   // test("GET - STATUS: 200 - works with 2 gte and lte for value", () => {
   //   return request(app).get("/vans").expect(200).then( response => {

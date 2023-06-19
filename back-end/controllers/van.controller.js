@@ -6,11 +6,11 @@ const getVans = async (req, res) => {
   if(req.query){
     Object.keys(req.query).forEach((query) => {
       switch(query){
-      case "van_make":
-        filters.van_make = req.query.van_make;
+      case "make":
+        filters.make = req.query.make;
         break;
-      case "van_model":
-        filters.van_model = req.query.van_model;
+      case "model":
+        filters.model = req.query.model;
         break;
       case "region":
         filters["location.region"] = req.query.region;
@@ -22,21 +22,18 @@ const getVans = async (req, res) => {
         filters.sleeps = req.query.sleeps;
         break;
       case "pricePerNightgte":
-        filters["pricePerNight.$gte"] = req.query.pricePerNightgte;
+        filters["pricePerNight"] = {  $gte: req.query.pricePerNightgte};
         break;
       case "pricePerNightlte":
-        filters["pricePerNight.$lte"] = req.query.pricePerNightlte;
+        filters["pricePerNight"] = {$lte: req.query.pricePerNightlte};
         break;
     }
     })
     
   }
 
-  console.log(filters)
-
-
   try {
-    const allVans = await Van.find(filters);
+    const allVans = await Van.find({...filters});
     res.status(200).json({ allVans });
   } catch (err) {
     console.log(err);
