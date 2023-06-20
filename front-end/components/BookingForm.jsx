@@ -41,7 +41,7 @@ export const BookingForm = ({ pricePerNight, id, vanName, image }) => {
     data.vanId = id;
     data.paymentDetails = "unpaid";
     postVanBooking(data).then(({ data }) => {
-      console.log(vanName);
+      console.log(data);
       navigate("BookingConfirmation", {
         bookingId: data.newBooking._id,
         vanName: vanName,
