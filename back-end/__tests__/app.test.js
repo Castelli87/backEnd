@@ -91,7 +91,10 @@ describe("GET /users/:id", () => {
           password,
           phoneNumber,
           img,
-        } = response.body;
+        } = response.body.userById;
+        //we are getting back even the vans that the owner own 
+        //we are getting back even the bookings of this user 
+        console.log(response.body.bookings)
         expect(location).toEqual({
           region: "barnsley",
           postcode: "s704qr",

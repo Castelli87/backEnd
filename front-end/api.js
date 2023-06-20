@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const instance = axios.create({
+
   baseURL: `http://192.168.1.103:3000`,
+
 });
 
 export const getCampervans = async () => {
@@ -40,6 +42,16 @@ export const getBookingById = async (bookingId) => {
   }
 };
 
+
+export const getUser = async (userId)=>{
+  try {
+    const userById = await instance.get(`/users/${userId}`)
+    return userById
+  }catch(err){
+    console.log(err)
+  }
+}
+
 export const postVanByOwner = async (data) => {
   try {
     data.location = { region: data.region, postcode: data.postcode };
@@ -59,3 +71,4 @@ export const postVanByOwner = async (data) => {
     console.log(err);
   }
 };
+
