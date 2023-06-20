@@ -5,9 +5,27 @@ const instance = axios.create({
   baseURL: `http://${IP}:3000`,
 });
 
-export const getCampervans = async () => {
+export const getCampervans = async (filters) => {
   try {
-    const vans = await instance.get("/vans");
+    let endpoint = `/vans`;
+    let query = "?"
+    
+    if(Object.keys(filters).length !== 0) { 
+      // console.log(Object.keys(filters.length))
+      const newFilters = Object.entries(filters)
+    newFilters.forEach((filter, index) => {
+      console.log(Object.keys(filters).length)
+      if(index === Object.keys(filters).length-1){
+        query += `${filter[0]}=${filter[1]}`
+      } else {
+        query += `${filter[0]}=${filter[1]}&`
+      }
+      
+    })
+      endpoint += query
+      console.warn(endpoint)
+  }
+    const vans = await instance.get(endpoint);
     return vans;
   } catch (err) {
     console.log(err);
