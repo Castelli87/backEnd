@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import { getUser } from "../api";
 
 export const UserProfile = () => {
-  const [userId, setUserId] = useState("648733606b77da2cfea3e770");
+  const [userId, setUserId] = useState("648733606b77da2cfea3e774");
   const [user, setUser] = useState({});
   const [vans, setVans] = useState([]);
-  const [bookings, setBookings] = useState();
+  const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
     getUser(userId).then(({ data }) => {
@@ -58,6 +58,22 @@ export const UserProfile = () => {
           })
         )}
       </View>
+      <View>
+        {!bookings.length > 0 ? (
+          <Text>No upcoming trips</Text>
+        ) : (
+          bookings.map((booking, index) => {
+            return (
+              <View key={index} style={styles.box}>
+                <Text>UpComing:{index + 1 } trip</Text>
+                <Text>Start Date:{booking.startDate.slice(0,10)}</Text>
+                <Text>End Date:{booking.endDate.slice(0,10)}</Text>
+                <Text> £:{booking.totalCost}</Text> 
+              </View>
+            );
+          })
+        )}
+      </View>
     </View>
   );}
   
@@ -66,4 +82,12 @@ export const UserProfile = () => {
       flex: 1,
       alignItems: 'center',
     },
+    box:{  borderWidth: 1,  
+    borderColor: 'black', 
+    borderRadius: 5,  
+    padding: 3, 
+    margin:2
+
+
+    }
   });
