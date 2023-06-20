@@ -25,8 +25,8 @@ const getUserById = async (req, res) => {
 
   const vansByUserId = await Van.find({owner:id})
 
-  const bookingsByUserId = await Booking.find({rentor:id}) // This is the person who booked our van 
-  
+  const bookingsByUserId = await Booking.find({userId:id}) // This is the person who booked our van 
+
   if (!userById) {
     return res.status(404).json({ error: "request not found" });
   }
