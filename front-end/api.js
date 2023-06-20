@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: `http://192.168.0.42:3000`,
+  baseURL: `http://192.168.43.139:3000`,
 });
 
 export const getCampervans = async () => {
@@ -39,3 +39,12 @@ export const getBookingById = async (bookingId) => {
     console.log(err);
   }
 };
+
+export const getUser = async (userId)=>{
+  try {
+    const userById = await instance.get(`/users/${userId}`)
+    return userById
+  }catch(err){
+    console.log(err)
+  }
+}
