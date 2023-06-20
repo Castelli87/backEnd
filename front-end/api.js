@@ -40,6 +40,15 @@ export const getBookingById = async (bookingId) => {
   }
 };
 
+export const getUser = async (userId) => {
+  try {
+    const userById = await instance.get(`/users/${userId}`);
+    return userById;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const postVanByOwner = async (data) => {
   try {
     data.location = { region: data.region, postcode: data.postcode };

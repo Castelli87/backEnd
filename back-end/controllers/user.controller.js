@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const User = require("../models/User");
 const users = require("../data/users");
+const Van = require("../models/Van");
+const Booking = require("../models/Bookings");
 
 const getUsers = async (req, res) => {
   try {
@@ -20,11 +22,22 @@ const getUserById = async (req, res) => {
 
   const userById = await User.findById(id);
 
+  const vansByUserId = await Van.find({ owner: id });
+
+  const bookingsByUserId = await Booking.find({ rentor: id }); // This is the person who booked our van
+
   if (!userById) {
     return res.status(404).json({ error: "request not found" });
   }
-  res.status(200).json(userById);
+  res
+    .status(200)
+    .send({
+      userById: userById,
+      vans: vansByUserId,
+      bookings: bookingsByUserId,
+    });
 };
+
 const getUserByUsername = (username) => {
   return users.users.find((user) => user.username === username);
 };
