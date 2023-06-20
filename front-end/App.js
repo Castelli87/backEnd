@@ -46,12 +46,8 @@ export default function App() {
           <Drawer.Screen name="Home" component={Home} />
           <Drawer.Screen name="UserProfile" component={UserProfile} />
           <Drawer.Screen name="Vans" component={Vans} />
-          <Drawer.Screen name="Register" component={Register} />
+          <Drawer.Screen name="SignUp" component={Register} />
           <Drawer.Screen name="AdvertiseVan" component={AdvertiseVan} />
-          <Drawer.Screen
-            name="BookingConfirmation"
-            component={BookingConfirmation}
-          />
           {currentUser === "" ? (
             <Drawer.Screen
               name="Login"
@@ -65,6 +61,11 @@ export default function App() {
               options={{ presentation: "modal" }}
             />
           )}
+          <Drawer.Screen
+            name="BookingConfirmation"
+            component={BookingConfirmation}
+            options={{ drawerLabel: () => null }}
+          />
           <Drawer.Screen
             name="IndividualVan"
             component={IndividualVan}
