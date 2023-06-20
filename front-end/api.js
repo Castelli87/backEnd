@@ -40,11 +40,40 @@ export const getBookingById = async (bookingId) => {
   }
 };
 
-export const getUser = async (userId)=>{
+export const getUser = async (userId) => {
   try {
-    const userById = await instance.get(`/users/${userId}`)
-    return userById
-  }catch(err){
-    console.log(err)
+    const userById = await instance.get(`/users/${userId}`);
+    return userById;
+  } catch (err) {
+    console.log(err);
   }
-}
+};
+
+export const postVanByOwner = async (data) => {
+  try {
+    data.location = { region: data.region, postcode: data.postcode };
+    data.availabilityDates = {
+      startDate: data.startDate,
+      endDate: data.endDate,
+    };
+    data.amenities = data.amenities.split(",");
+    data.images = data.images.split(",");
+    delete data.region;
+    delete data.postcode;
+    delete data.endDate;
+    delete data.startDate;
+    const newVan = await instance.post(`/${data.owner}/vans`, data);
+    return newVan;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const postLoginUser = async (data) => {
+  try {
+    const userLoginAttempt = await instance.post(`/login`, data);
+    return userLoginAttempt;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+};

@@ -11,12 +11,20 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+import { postVanByOwner } from "../api";
+import { useNavigation } from "@react-navigation/native";
 
 export const AdvertiseVan = () => {
+  const { navigate } = useNavigation();
+  const [date, setDate] = useState(new Date());
+  const [finishDate, setFinishDate] = useState(new Date());
+  const [clicked, setClicked] = useState(false);
+
   const {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       vanName: "",
@@ -34,24 +42,53 @@ export const AdvertiseVan = () => {
       images: "",
     },
   });
-  const onSubmit = (data) => console.log(data);
-
-  const [date, setDate] = useState(new Date(1598051730000));
+  const onSubmit = (formData) => {
+    formData.owner = "648733606b77da2cfea3e770";
+    console.log(formData);
+    postVanByOwner(formData).then(({ data }) => {
+      navigate("IndividualVan", {
+        id: data.newVan._id,
+      });
+    });
+  };
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
-    setDate(currentDate);
+    const year = selectedDate.getFullYear();
+    let month = selectedDate.getMonth() + 1;
+    let day = selectedDate.getDate();
+
+    if (month < 10) month = `0${month}`;
+    if (day < 10) day = `0${day}`;
+
+    if (!clicked) {
+      setDate(currentDate);
+      setValue("startDate", `${year}-${month}-${day}`);
+    } else {
+      setFinishDate(currentDate);
+      setValue("endDate", `${year}-${month}-${day}`);
+    }
   };
 
   const showMode = (currentMode) => {
-    DateTimePickerAndroid.open({
-      value: date,
-      onChange,
-      mode: currentMode,
-      is24Hour: true,
-    });
+    if (!clicked) {
+      DateTimePickerAndroid.open({
+        onChange,
+        value: date,
+        mode: currentMode,
+        is24Hour: true,
+      });
+      setClicked(true);
+    } else {
+      DateTimePickerAndroid.open({
+        onChange,
+        value: finishDate,
+        mode: currentMode,
+        is24Hour: true,
+      });
+      setClicked(false);
+    }
   };
-  console.log(date);
 
   const showDatepicker = () => {
     showMode("date");
@@ -192,11 +229,6 @@ export const AdvertiseVan = () => {
         name="amenities"
       />
 
-      {/* <View>
-        <Button onPress={showDatepicker} title="Please pick start Date" />
-        <Text>selected: {date.toLocaleString()}</Text>
-      </View> */}
-
       <Controller
         control={control}
         rules={{
@@ -204,7 +236,11 @@ export const AdvertiseVan = () => {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <View>
-            <Button onPress={showDatepicker} title="Please pick start Date" />
+            <Button
+              onPress={showDatepicker}
+              // disable={}
+              title="Please pick start Date"
+            />
             <Text>selected: {date.toLocaleString()}</Text>
           </View>
         )}
@@ -218,12 +254,10 @@ export const AdvertiseVan = () => {
           required: true,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="availability end date"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
+          <View>
+            <Button onPress={showDatepicker} title="Please pick end Date" />
+            <Text>selected: {finishDate.toLocaleString()}</Text>
+          </View>
         )}
         name="endDate"
       />
