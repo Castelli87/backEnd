@@ -1,7 +1,8 @@
 import axios from "axios";
+import {IP} from "./.env.js"
 
 const instance = axios.create({
-  baseURL: `http://192.168.0.42:3000`,
+  baseURL: `http://${IP}:3000`,
 });
 
 export const getCampervans = async (filters) => {
@@ -57,3 +58,50 @@ export const getBookingById = async (bookingId) => {
     console.log(err);
   }
 };
+
+export const getUser = async (userId) => {
+  try {
+    const userById = await instance.get(`/users/${userId}`);
+    return userById;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const postVanByOwner = async (data) => {
+  try {
+    data.location = { region: data.region, postcode: data.postcode };
+    data.availabilityDates = {
+      startDate: data.startDate,
+      endDate: data.endDate,
+    };
+    data.amenities = data.amenities.split(",");
+    data.images = data.images.split(",");
+    delete data.region;
+    delete data.postcode;
+    delete data.endDate;
+    delete data.startDate;
+    const newVan = await instance.post(`/${data.owner}/vans`, data);
+    return newVan;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const postLoginUser = async (data) => {
+  try {
+    const userLoginAttempt = await instance.post(`/login`, data);
+    return userLoginAttempt;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+};
+
+export const getReviewsByVanId = async(vanId)=>{
+  try{
+    const reviews = await instance.get(`/vans/${vanId}/reviews`)
+    return reviews
+  } catch (err){
+    console.log(err)
+  }
+}

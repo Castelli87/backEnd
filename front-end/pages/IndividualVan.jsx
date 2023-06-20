@@ -12,11 +12,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import { getCamperVan } from "../api";
+import { getCamperVan,getReviewsByVanId } from "../api";
 import { BookingForm } from "../components/BookingForm";
 
 export const IndividualVan = ({ route, navigation }) => {
   const [van, setVan] = useState({});
+  const [reviews,setReviews]= useState([])
   const { id } = route.params;
   const { navigate } = useNavigation();
 
@@ -25,6 +26,12 @@ export const IndividualVan = ({ route, navigation }) => {
       setVan(data);
     });
   }, []);
+
+  useEffect(()=>{
+    getReviewsByVanId(id).then(({data})=>{
+      setReviews(data.reviews)
+    })
+  },[id])
 
   if (Object.keys(van).length === 0) {
     return null;
@@ -75,6 +82,18 @@ export const IndividualVan = ({ route, navigation }) => {
               image={van.images[0]}
               id={van._id}
             ></BookingForm>
+      <View>
+        {!reviews.length > 0 ? (<Text>No Reviews</Text>):(reviews.map((review,index)=>{
+          return(
+            <View key={index}>
+              <Text>Username:{review.userId.username}</Text>
+              <Text>Rating:{review.rating}</Text>
+              <Text>{review.comment}</Text>
+
+            </View>
+          )
+        }))}
+      </View>
           </>
         }
       />
