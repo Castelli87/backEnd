@@ -1,7 +1,8 @@
 import axios from "axios";
+import {IP} from "./.env.js"
 
 const instance = axios.create({
-  baseURL: `http://192.168.0.11:3000`,
+  baseURL: `http://${IP}:3000`,
 });
 
 export const getCampervans = async () => {
