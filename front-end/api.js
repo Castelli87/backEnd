@@ -59,3 +59,12 @@ export const postVanByOwner = async (data) => {
     console.log(err);
   }
 };
+
+export const postLoginUser = async (data) => {
+  try {
+    const userLoginAttempt = await instance.post(`/login`, data);
+    return userLoginAttempt;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+};

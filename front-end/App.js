@@ -15,10 +15,15 @@ import { Login } from "./components/Login";
 import { AdvertiseVan } from "./pages/AdvertiseVan";
 import { IndividualVan } from "./pages/IndividualVan";
 import { BookingConfirmation } from "./pages/BookingConfirmation";
+import { useState } from "react";
 
 const Drawer = createDrawerNavigator();
 
+export const UserContext = React.createContext(null);
+
 export default function App() {
+  const [currentUser, setCurrentUser] = useState("");
+
   // const fecthApi = () => {
   //   axios
   //     .get("http://192.168.0.11:3000/users")
@@ -35,25 +40,39 @@ export default function App() {
   // }, []);
 
   return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home" headerBackTitle="back">
-        <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="UserProfile" component={UserProfile} />
-        <Drawer.Screen name="Vans" component={Vans} />
-        <Drawer.Screen name="Register" component={Register} />
-        <Drawer.Screen name="AdvertiseVan" component={AdvertiseVan} />
-        <Drawer.Screen
-          name="BookingConfirmation"
-          component={BookingConfirmation}
-        />
-        <Drawer.Screen
-          name="Login"
-          component={Login}
-          options={{ presentation: "modal" }}
-        />
-        <Drawer.Screen name="IndividualVan" component={IndividualVan} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <NavigationContainer>
+        <Drawer.Navigator initialRouteName="Home" headerBackTitle="back">
+          <Drawer.Screen name="Home" component={Home} />
+          <Drawer.Screen name="UserProfile" component={UserProfile} />
+          <Drawer.Screen name="Vans" component={Vans} />
+          <Drawer.Screen name="Register" component={Register} />
+          <Drawer.Screen name="AdvertiseVan" component={AdvertiseVan} />
+          <Drawer.Screen
+            name="BookingConfirmation"
+            component={BookingConfirmation}
+          />
+          {currentUser === "" ? (
+            <Drawer.Screen
+              name="Login"
+              component={Login}
+              options={{ presentation: "modal" }}
+            />
+          ) : (
+            <Drawer.Screen
+              name="Logout"
+              component={Login}
+              options={{ presentation: "modal" }}
+            />
+          )}
+          <Drawer.Screen
+            name="IndividualVan"
+            component={IndividualVan}
+            options={{ drawerLabel: () => null }}
+          />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </UserContext.Provider>
   );
 }
 
