@@ -78,3 +78,12 @@ export const postLoginUser = async (data) => {
     throw new Error(err.response.data.message);
   }
 };
+
+export const getReviewsByVanId = async(vanId)=>{
+  try{
+    const reviews = await instance.get(`/vans/${vanId}/reviews`)
+    return reviews
+  } catch (err){
+    console.log(err)
+  }
+}
