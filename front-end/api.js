@@ -114,3 +114,12 @@ export const postNewUser = async (data) => {
     console.log(err);
   }
 };
+
+export const deleteVan = async (vanId) => {
+  try {
+    const deletedVan = await instance.get(`/vans/${vanId}`);
+    return deletedVan;
+  } catch (err) {
+    console.log(err);
+  }
+};
