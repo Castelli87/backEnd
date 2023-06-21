@@ -1,4 +1,4 @@
-import { Text, View, Button, TextInput } from "react-native";
+import { Text, View, Button, TextInput,StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useContext, useState } from "react";
 import { postVanBooking } from "../api";
@@ -117,6 +117,7 @@ export const BookingForm = ({ pricePerNight, id, vanName, image }) => {
   return (
     <View>
     <Calendar
+    style={styles.box}
       onDayPress={day => {
         if(!pressed){
         setSelectedStartDate(day.dateString);
@@ -137,11 +138,27 @@ export const BookingForm = ({ pricePerNight, id, vanName, image }) => {
       }}
     />
 
-      <Button title="Click for price" onPress={handleSubmit(onSubmit)} />
+      <Button  title="Click for price" onPress={handleSubmit(onSubmit)} />
 
-      <Text>Total cost: £{totalCost}</Text>
+      <Text style={{marginVertical:15,textAlign:"center"}} >Total cost: £{totalCost}</Text>
 
       <Button title="Submit" onPress={handleSubmit(onSecondSubmit)} />
     </View>
   );
 };
+const styles = StyleSheet.create({
+
+  box: {
+    margin: 10,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 5,
+    padding: 10,
+    margin: 5,
+    marginBottom:25
+  },
+  space:{
+    marginVertical:15,
+  }
+});
