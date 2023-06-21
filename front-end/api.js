@@ -1,5 +1,5 @@
 import axios from "axios";
-import {IP} from "./.env.js"
+import { IP } from "./.env.js";
 
 const instance = axios.create({
   baseURL: `http://${IP}:3000`,
@@ -8,23 +8,22 @@ const instance = axios.create({
 export const getCampervans = async (filters) => {
   try {
     let endpoint = `/vans`;
-    let query = "?"
-    
-    if(Object.keys(filters).length !== 0) { 
+    let query = "?";
+
+    if (Object.keys(filters).length !== 0) {
       // console.log(Object.keys(filters.length))
-      const newFilters = Object.entries(filters)
-    newFilters.forEach((filter, index) => {
-      console.log(Object.keys(filters).length)
-      if(index === Object.keys(filters).length-1){
-        query += `${filter[0]}=${filter[1]}`
-      } else {
-        query += `${filter[0]}=${filter[1]}&`
-      }
-      
-    })
-      endpoint += query
-      console.warn(endpoint)
-  }
+      const newFilters = Object.entries(filters);
+      newFilters.forEach((filter, index) => {
+        console.log(Object.keys(filters).length);
+        if (index === Object.keys(filters).length - 1) {
+          query += `${filter[0]}=${filter[1]}`;
+        } else {
+          query += `${filter[0]}=${filter[1]}&`;
+        }
+      });
+      endpoint += query;
+      console.warn(endpoint);
+    }
     const vans = await instance.get(endpoint);
     return vans;
   } catch (err) {
@@ -97,11 +96,21 @@ export const postLoginUser = async (data) => {
   }
 };
 
-export const getReviewsByVanId = async(vanId)=>{
-  try{
-    const reviews = await instance.get(`/vans/${vanId}/reviews`)
-    return reviews
-  } catch (err){
-    console.log(err)
+export const getReviewsByVanId = async (vanId) => {
+  try {
+    const reviews = await instance.get(`/vans/${vanId}/reviews`);
+    return reviews;
+  } catch (err) {
+    console.log(err);
   }
-}
+};
+
+export const postNewUser = async (data) => {
+  try {
+    data.location = { region: data.region, postcode: data.postcode };
+    const newUser = await instance.post(`/users`, data);
+    return newUser;
+  } catch (err) {
+    console.log(err);
+  }
+};
