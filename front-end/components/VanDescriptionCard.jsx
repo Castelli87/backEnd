@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from "react-native"
 
 export const VanDescriptionCard = ({description}) => {
     return (
-            <View style={styles.card}>
+            <View>
                 <Text>{description}</Text>
             </View>
     )
