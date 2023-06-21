@@ -123,3 +123,13 @@ export const deleteVan = async (vanId) => {
     console.log(err);
   }
 };
+
+export const PostReviewsByVanId = async (data) => {
+  console.log(data)
+  try {
+    const reviews = await instance.post(`/vans/${data.vanId}/reviews`,data);
+    return reviews;
+  } catch (err) {
+    console.log(err);
+  }
+};
