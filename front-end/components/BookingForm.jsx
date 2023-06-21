@@ -4,14 +4,20 @@ import { useContext, useState } from "react";
 import { postVanBooking } from "../api";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../App";
+import { Calendar } from 'react-native-calendars';
 
 export const BookingForm = ({ pricePerNight, id, vanName, image }) => {
   const { navigate } = useNavigation();
   const [totalCost, setTotalCost] = useState(0);
   const { currentUser, setCurrentUser } = useContext(UserContext);
+  const [ selectedStartDate, setSelectedStartDate ] = useState("");
+  const [ selectedEndDate, setSelectedEndDate ] = useState("");
+
+  const [pressed, setPressed ] = useState(false);
 
   const {
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -22,6 +28,8 @@ export const BookingForm = ({ pricePerNight, id, vanName, image }) => {
   });
 
   const onSubmit = (data) => {
+    data.startDate = selectedStartDate;
+    data.endDate = selectedEndDate;
     const numberOfNights = calculateNumberOfNights(
       data.startDate,
       data.endDate
@@ -37,14 +45,58 @@ export const BookingForm = ({ pricePerNight, id, vanName, image }) => {
     const numberOfNights = Math.ceil(timeDiff / (1000 * 3600 * 24));
     return numberOfNights;
   };
+  const getDisabledDates = (startDate, endDate) => {
+    const dates = [];
+  const disabled = {};
+  let currentDate = new Date(startDate);
+
+  while (currentDate <= new Date(endDate)) {
+    dates.push(currentDate.toISOString().split('T')[0]);
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  dates.forEach(day => {
+  disabled[day] = {
+    disabled: true,
+  };
+});
+
+  return disabled;
+};
+  
+
+  const getDatesInRange = (startDate, endDate) => {
+  const dates = [];
+  const marked = {};
+  let currentDate = new Date(startDate);
+
+  while (currentDate <= new Date(endDate)) {
+    dates.push(currentDate.toISOString().split('T')[0]);
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  
+  dates.pop();
+  dates.shift();
+
+  dates.forEach(day => {
+  marked[day] = {
+    marked: true,
+    color: "#50cebb",
+  };
+});
+
+  return marked;
+};
 
   const onSecondSubmit = (data) => {
+    data.startDate = selectedStartDate;
+    data.endDate = selectedEndDate;
     data.userId = currentUser.user._id;
     data.totalCost = totalCost;
     data.vanId = id;
     data.paymentDetails = "unpaid";
+    // console.log(data);
     postVanBooking(data).then(({ data }) => {
-      console.log(data);
       navigate("BookingConfirmation", {
         bookingId: data.newBooking._id,
         vanName: vanName,
@@ -52,42 +104,38 @@ export const BookingForm = ({ pricePerNight, id, vanName, image }) => {
       });
     });
   };
+  const dates = getDatesInRange(selectedStartDate, selectedEndDate);
+
+  const disabledDates1 = getDisabledDates("2023-06-12", "2023-06-14")
+
+  const disabledDates2 = getDisabledDates("2023-07-01", "2023-07-08");
+
+  const disabledDates = Object.assign({}, disabledDates1, disabledDates2);
+  
+  console.log(disabledDates)
 
   return (
     <View>
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="start date"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="startDate"
-      />
-      {errors.startDate && <Text>This is required.</Text>}
-
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="end date"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="endDate"
-      />
-      {errors.endDate && <Text>This is required.</Text>}
+    <Calendar
+      onDayPress={day => {
+        if(!pressed){
+        setSelectedStartDate(day.dateString);
+        setPressed(true)
+          
+        } else{
+          setSelectedEndDate(day.dateString);
+          setPressed(false)
+        }
+        
+      }}
+      markingType={"period"}
+      markedDates={{
+        [selectedStartDate]: {selected: true, startingDay: true, disableTouchEvent: true, selectedDotColor: 'orange', color: '#50cebb'},
+        [selectedEndDate]: {selected: true, endingDay: true, disableTouchEvent: true, selectedDotColor: 'orange', color: '#50cebb'},
+        ...dates,
+        ...disabledDates
+      }}
+    />
 
       <Button title="Click for price" onPress={handleSubmit(onSubmit)} />
 
