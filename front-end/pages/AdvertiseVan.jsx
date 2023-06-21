@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Button,
   SafeAreaView,
@@ -13,12 +13,14 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { postVanByOwner } from "../api";
 import { useNavigation } from "@react-navigation/native";
+import { UserContext } from "../App";
 
 export const AdvertiseVan = () => {
   const { navigate } = useNavigation();
   const [date, setDate] = useState(new Date());
   const [finishDate, setFinishDate] = useState(new Date());
   const [clicked, setClicked] = useState(false);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const {
     control,
@@ -43,7 +45,7 @@ export const AdvertiseVan = () => {
     },
   });
   const onSubmit = (formData) => {
-    formData.owner = "648733606b77da2cfea3e770";
+    formData.owner = currentUser.user._id;
     console.log(formData);
     postVanByOwner(formData).then(({ data }) => {
       navigate("IndividualVan", {

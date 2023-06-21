@@ -23,22 +23,26 @@ export const Login = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    postLoginUser(data)
-      .then(({ data }) => {
-        setCurrentUser(data);
-        // goBack();
-      })
-      .catch((err) => {
-        Alert.alert("An error occurred, please try again!", err.message);
-      });
+    if(currentUser === ""){
+      
+      postLoginUser(data)
+        .then(({ data }) => {
+          setCurrentUser(data);
+          // goBack();
+        })
+        .catch((err) => {
+          Alert.alert("An error occurred, please try again!", err.message);
+        });
+    }
   };
 
   const handleLogout = () => {
     setCurrentUser("");
     navigate("Home");
   };
-
-  // console.log(currentUser);
+  console.log(currentUser, "user after logout");
+  
+  
 
   return (
     <View>
