@@ -55,38 +55,77 @@ export const IndividualVan = ({ route, navigation }) => {
         ListHeaderComponent={
           <>
             <Text style={styles.title}>{van.vanName}</Text>
-            <Text>£{van.pricePerNight} per night</Text>
-            {van.images.map((image, index) => {
-              return (
-                <Image
-                  key={index}
-                  style={{ width: 150, height: 150 }}
-                  source={{
-                    uri: image,
-                  }}
-                />
-              );
-            })}
+            <ScrollView horizontal>
+              <View style={{ flexDirection: "row" }}>
+                {van.images.map((image, index) => {
+                  return (
+                    <Image
+                      key={index}
+                      style={{ width: 150, height: 150,marginLeft:25,marginBottom:25}}
+                      source={{
+                        uri: image,
+                      }}
+                    />
+                  );
+                })}
+              </View>
+            </ScrollView>
 
-            <Text>
-              Van Type: {van.make} {van.model}
-            </Text>
-            <Text>Year: {van.year}</Text>
-            <Text>region: {van.location.region}</Text>
-            <Text>postcode: {van.location.postcode}</Text>
-            <VanDescriptionCard
+            <ScrollView style={styles.box}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  paddingLeft: 120,
+                  marginBottom: 10,
+                  marginTop: 10,
+                }}
+              >
+                Van Info
+              </Text>
+              <Text>
+                Van Type: {van.make} {van.model}
+              </Text>
+              <Text>£{van.pricePerNight} per night</Text>
+              <Text>Year: {van.year}</Text>
+              <Text>Region: {van.location.region}</Text>
+              <Text>{van.description}</Text>
+
+              {/*             <VanDescriptionCard
               description={van.description}
-            ></VanDescriptionCard>
-            {van.amenities ? (
-              <FlatList
-                data={van.amenities}
-                renderItem={({ item }) => (
-                  <View>
-                    <Text>{item}</Text>
-                  </View>
-                )}
-              />
-            ) : null}
+            ></VanDescriptionCard> */}
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  marginBottom: 5,
+                  marginTop: 10,
+                }}
+              >
+                Amentities:
+              </Text>
+              {van.amenities ? (
+                <FlatList
+                  data={van.amenities}
+                  renderItem={({ item }) => (
+                    <View>
+                      <Text>-{item}</Text>
+                    </View>
+                  )}
+                />
+              ) : null}
+            </ScrollView>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                paddingLeft: 100,
+                marginBottom: 30,
+                marginTop: 30,
+              }}
+            >
+              Check availability
+            </Text>
             <BookingForm
               pricePerNight={van.pricePerNight}
               vanName={van.vanName}
@@ -104,7 +143,7 @@ export const IndividualVan = ({ route, navigation }) => {
               ) : (
                 reviews.map((review, index) => {
                   return (
-                    <View key={index}  style={styles.box}>
+                    <View key={index} style={styles.box}>
                       <Text>{review.userId.username}</Text>
                       <Text>Rating:{review.rating}</Text>
                       <Text>{review.comment}</Text>
@@ -127,17 +166,16 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    margin:3,
-    padding:5
-    
+    margin: 3,
+    padding: 5,
   },
-  box:{
-    margin:10,
-    padding:8,
-      borderWidth: 1,
-      borderColor: "black",
-      borderRadius: 5,
-      padding: 3,
-      margin: 2,
-  }
+  box: {
+    margin: 10,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 5,
+    padding: 10,
+    margin: 5,
+  },
 });
