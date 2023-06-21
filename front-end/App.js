@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import Home from "./pages/Home";
 import { UserProfile } from "./pages/UserProfile";
 import { Vans } from "./pages/Vans";
@@ -13,42 +14,66 @@ import { Register } from "./pages/Register";
 import { Login } from "./components/Login";
 import { AdvertiseVan } from "./pages/AdvertiseVan";
 import { IndividualVan } from "./pages/IndividualVan";
+import { BookingConfirmation } from "./pages/BookingConfirmation";
+import { useState } from "react";
 
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+export const UserContext = React.createContext(null);
 
 export default function App() {
-  const fecthApi = () => {
-    axios
-      .get("http://192.168.0.11:3000/users")
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const [currentUser, setCurrentUser] = useState("");
 
-  useEffect(() => {
-    fecthApi();
-  }, []);
+  // const fecthApi = () => {
+  //   axios
+  //     .get("http://192.168.0.11:3000/users")
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   fecthApi();
+  // }, []);
 
   return (
-    <NavigationContainer>
-      <Nav></Nav>
-      <Stack.Navigator initialRouteName="Home" headerBackTitle="back">
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="UserProfile" component={UserProfile} />
-        <Stack.Screen name="Vans" component={Vans} />
-        <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="AdvertiseVan" component={AdvertiseVan} />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ presentation: "modal" }}
-        />
-        <Stack.Screen name="IndividualVan" component={IndividualVan} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <NavigationContainer>
+        <Drawer.Navigator initialRouteName="Home" headerBackTitle="back">
+          <Drawer.Screen name="Home" component={Home} />
+          <Drawer.Screen name="UserProfile" component={UserProfile} />
+          <Drawer.Screen name="Vans" component={Vans} />
+          <Drawer.Screen name="SignUp" component={Register} />
+          <Drawer.Screen name="AdvertiseVan" component={AdvertiseVan} />
+          {currentUser === "" ? (
+            <Drawer.Screen
+              name="Login"
+              component={Login}
+              options={{ presentation: "modal" }}
+            />
+          ) : (
+            <Drawer.Screen
+              name="Logout"
+              component={Login}
+              options={{ presentation: "modal" }}
+            />
+          )}
+          <Drawer.Screen
+            name="BookingConfirmation"
+            component={BookingConfirmation}
+            options={{ drawerLabel: () => null }}
+          />
+          <Drawer.Screen
+            name="IndividualVan"
+            component={IndividualVan}
+            options={{ drawerLabel: () => null }}
+          />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </UserContext.Provider>
   );
 }
 

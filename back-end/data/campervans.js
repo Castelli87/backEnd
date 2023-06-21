@@ -1,5 +1,10 @@
+const mongoose = require('mongoose');
+const { Types } = mongoose;
+
+
 const campervans = [
   {
+    _id: new Types.ObjectId('64873c83768e970eec9aa22a'),
     vanName: "The Voyager",
     owner: "648733606b77da2cfea3e770",
     description:
@@ -25,6 +30,7 @@ const campervans = [
     sleeps: 2,
   },
   {
+    _id: new Types.ObjectId('64873c83768e970eec9aa22b'),
     vanName: "Wanderlust",
     owner: "648733606b77da2cfea3e771",
     description:
@@ -49,6 +55,7 @@ const campervans = [
     sleeps: 4,
   },
   {
+    _id: new Types.ObjectId('64873c83768e970eec9aa22c'),
     vanName: "Sea Change",
     owner: "648733606b77da2cfea3e772",
     description:
