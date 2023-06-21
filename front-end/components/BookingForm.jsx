@@ -1,12 +1,15 @@
 import { Text, View, Button, TextInput } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { postVanBooking } from "../api";
 import { useNavigation } from "@react-navigation/native";
+import { UserContext } from "../App";
 
 export const BookingForm = ({ pricePerNight, id, vanName, image }) => {
   const { navigate } = useNavigation();
   const [totalCost, setTotalCost] = useState(0);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
+
   const {
     control,
     handleSubmit,
@@ -36,7 +39,7 @@ export const BookingForm = ({ pricePerNight, id, vanName, image }) => {
   };
 
   const onSecondSubmit = (data) => {
-    data.userId = "648733606b77da2cfea3e774";
+    data.userId = currentUser.user._id;
     data.totalCost = totalCost;
     data.vanId = id;
     data.paymentDetails = "unpaid";

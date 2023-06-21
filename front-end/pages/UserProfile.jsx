@@ -6,11 +6,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getUser, deleteVan } from "../api";
+import { UserContext } from "../App";
 
 export const UserProfile = () => {
-  const [userId, setUserId] = useState("648733606b77da2cfea3e770");
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const [user, setUser] = useState({});
   const [vans, setVans] = useState([]);
   const [bookings, setBookings] = useState([]);
@@ -25,12 +26,17 @@ export const UserProfile = () => {
   };
 
   useEffect(() => {
-    getUser(userId).then(({ data }) => {
-      setUser(data.userById);
-      setVans(data.vans);
-      setBookings(data.bookings);
-    });
-  }, []);
+    if(currentUser !== ""){
+
+      getUser(currentUser.user._id).then(({ data }) => {
+        console.log(data, "user from db")
+        console.log(currentUser, "currentUser")
+        setUser(data.userById);
+        setVans(data.vans);
+        setBookings(data.bookings);
+      });
+    }
+  }, [currentUser]);
 
   if (Object.keys(user).length === 0) {
     return null;
