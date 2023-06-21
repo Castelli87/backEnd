@@ -12,12 +12,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import { getCamperVan,getReviewsByVanId } from "../api";
+import { getCamperVan, getReviewsByVanId, PostReviewsByVanId } from "../api";
 import { BookingForm } from "../components/BookingForm";
+import ReviewForm from "../components/ReviewForm";
 
 export const IndividualVan = ({ route, navigation }) => {
   const [van, setVan] = useState({});
-  const [reviews,setReviews]= useState([])
+  const [reviews, setReviews] = useState([]);
   const { id } = route.params;
   const { navigate } = useNavigation();
 
@@ -27,16 +28,26 @@ export const IndividualVan = ({ route, navigation }) => {
     });
   }, []);
 
-  useEffect(()=>{
-    getReviewsByVanId(id).then(({data})=>{
-      setReviews(data.reviews)
-    })
-  },[id])
+  useEffect(() => {
+    getReviewsByVanId(id).then(({ data }) => {
+      setReviews(data.reviews);
+    });
+  }, [id]);
 
   if (Object.keys(van).length === 0) {
     return null;
   }
-
+  const handleReviewSubmit = (vanId, userId, rating, comment) => {
+    // Perform submission logic here
+    const newReview = {
+      vanId: vanId,
+      userId: userId,
+      rating: rating,
+      comment: comment,
+    };
+    setReviews([newReview, ...reviews]);
+    PostReviewsByVanId(newReview);
+  };
   return (
     <View style={styles.container}>
       <FlatList
@@ -82,18 +93,26 @@ export const IndividualVan = ({ route, navigation }) => {
               image={van.images[0]}
               id={van._id}
             ></BookingForm>
-      <View>
-        {!reviews.length > 0 ? (<Text>No Reviews</Text>):(reviews.map((review,index)=>{
-          return(
-            <View key={index}>
-              <Text>Username:{review.userId.username}</Text>
-              <Text>Rating:{review.rating}</Text>
-              <Text>{review.comment}</Text>
-
-            </View>
-          )
-        }))}
-      </View>
+            <ReviewForm
+              vanId={van._id}
+              onSubmit={handleReviewSubmit}
+            ></ReviewForm>
+            <ScrollView>
+              <Text style={styles.title}>Reviews:</Text>
+              {!reviews.length > 0 ? (
+                <Text>No Reviews</Text>
+              ) : (
+                reviews.map((review, index) => {
+                  return (
+                    <View key={index}  style={styles.box}>
+                      <Text>{review.userId.username}</Text>
+                      <Text>Rating:{review.rating}</Text>
+                      <Text>{review.comment}</Text>
+                    </View>
+                  );
+                })
+              )}
+            </ScrollView>
           </>
         }
       />
@@ -108,5 +127,17 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    margin:3,
+    padding:5
+    
   },
+  box:{
+    margin:10,
+    padding:8,
+      borderWidth: 1,
+      borderColor: "black",
+      borderRadius: 5,
+      padding: 3,
+      margin: 2,
+  }
 });
