@@ -54,14 +54,14 @@ export const Register = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       {createUser ? (
         <View>
           <Text>User created successfully!</Text>
           <Button title="Login  now" onPress={() => navigate("Login")} />
         </View>
       ) : (
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.formContainer} >
           <Controller
             control={control}
             rules={{
@@ -69,6 +69,7 @@ export const Register = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
+              style={styles.input}
                 placeholder="first name"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -77,7 +78,7 @@ export const Register = () => {
             )}
             name="firstName"
           />
-          {errors.firstName && <Text>This is required.</Text>}
+          {errors.firstName && <Text style={styles.errorText}>This is required.</Text>}
 
           <Controller
             control={control}
@@ -86,6 +87,7 @@ export const Register = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
+              style={styles.input}
                 placeholder="last name"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -94,7 +96,7 @@ export const Register = () => {
             )}
             name="lastName"
           />
-          {errors.lastName && <Text>This is required.</Text>}
+          {errors.lastName && <Text style={styles.errorText}>This is required.</Text>}
 
           <Controller
             control={control}
@@ -103,6 +105,7 @@ export const Register = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
+              style={styles.input}
                 placeholder="username"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -111,7 +114,7 @@ export const Register = () => {
             )}
             name="username"
           />
-          {errors.username && <Text>This is required.</Text>}
+          {errors.username && <Text style={styles.errorText}>This is required.</Text>}
 
           <Controller
             control={control}
@@ -120,6 +123,7 @@ export const Register = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
+              style={styles.input}
                 placeholder="password"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -128,7 +132,7 @@ export const Register = () => {
             )}
             name="password"
           />
-          {errors.password && <Text>This is required.</Text>}
+          {errors.password && <Text style={styles.errorText}>This is required.</Text>}
 
           <Controller
             control={control}
@@ -137,6 +141,7 @@ export const Register = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
+              style={styles.input}
                 placeholder="region"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -145,7 +150,7 @@ export const Register = () => {
             )}
             name="region"
           />
-          {errors.region && <Text>This is required.</Text>}
+          {errors.region && <Text style={styles.errorText}>This is required.</Text>}
 
           <Controller
             control={control}
@@ -154,6 +159,7 @@ export const Register = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
+              style={styles.input}
                 placeholder="postcode"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -162,7 +168,7 @@ export const Register = () => {
             )}
             name="postcode"
           />
-          {errors.postcode && <Text>This is required.</Text>}
+          {errors.postcode && <Text style={styles.errorText}>This is required.</Text>}
 
           <Controller
             control={control}
@@ -171,6 +177,7 @@ export const Register = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
+              style={styles.input}
                 placeholder="email"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -180,7 +187,7 @@ export const Register = () => {
             )}
             name="email"
           />
-          {errors.email && <Text>This is required.</Text>}
+          {errors.email && <Text style={styles.errorText}>This is required.</Text>}
 
           <Controller
             control={control}
@@ -189,6 +196,7 @@ export const Register = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
+              style={styles.input}
                 placeholder="phone number"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -198,7 +206,7 @@ export const Register = () => {
             )}
             name="phoneNumber"
           />
-          {errors.phoneNumber && <Text>This is required.</Text>}
+          {errors.phoneNumber && <Text style={styles.errorText}>This is required.</Text>}
 
           <Button title="image upload" label="Upload Image" onPress={() => pickImage()} />
           <Button title="reset-images" label="Reset" onPress={() => setImage("")
@@ -211,3 +219,26 @@ export const Register = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+  },
+  formContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
+  input: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 10,
+  },
+});

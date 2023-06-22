@@ -46,12 +46,13 @@ export const Vans = () => {
           <View key={index} style={styles.box}>
             <Text style={styles.vanName} >{campervan.vanName} </Text>
             <Image
-              style={{ width: 150, height: 150 }}
+              style={{ width:"100%", height: 150 }}
               source={{
                 uri: campervan.images[index],
               }}
+              resizeMode="cover"
             ></Image>
-            <Text>£{campervan.pricePerNight} per night </Text>
+            <Text style={styles.space}>£{campervan.pricePerNight} per night </Text>
             <Button
               title={"more info"}
               onPress={() =>
@@ -71,6 +72,7 @@ export const Vans = () => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 16,
+   
   },
   container: {
     flex: 1,
@@ -84,11 +86,19 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderRadius: 5,
     padding: 15,
-    margin: 10
+    margin: 10,
+/*     flex: 1,
+    justifyContent: "center",
+    alignItems: "center", */
   },
   vanName:{
     fontSize:25,
     fontWeight: 'bold',
+    marginBottom:10,
+    textAlign: "center"
+
     
-  }
+  },
+  space:{
+    marginVertical: 10}
 });
