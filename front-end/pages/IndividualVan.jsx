@@ -137,7 +137,7 @@ export const IndividualVan = ({ route, navigation }) => {
               onSubmit={handleReviewSubmit}
             ></ReviewForm>
             <ScrollView>
-              <Text style={styles.title}>Reviews:</Text>
+              <Text style={styles.title}>Reviews</Text>
               {!reviews.length > 0 ? (
                 <Text>No Reviews</Text>
               ) : (
@@ -162,7 +162,7 @@ export const IndividualVan = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 34,
-    color: "red",
+    color: "black",
   },
   container: {
     flex: 1,

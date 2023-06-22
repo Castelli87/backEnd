@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Button, Text, View, TextInput, Alert } from "react-native";
+import { Button, Text, View, TextInput, Alert,StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { UserContext } from "../App";
 import { useContext } from "react";
@@ -45,12 +45,12 @@ export const Login = () => {
   
 
   return (
-    <View>
+    <View style={styles.container}>
       {currentUser !== "" ? (
-        <Button title="Logout" onPress={() => handleLogout()}></Button>
+        <Button  style={styles.button} title="Logout" onPress={() => handleLogout()}></Button>
       ) : (
         <View>
-          <Text>Login Here</Text>
+          <Text style={styles.title}>Login Here</Text>
           <Controller
             control={control}
             rules={{
@@ -58,7 +58,9 @@ export const Login = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                placeholder="username"
+              
+              style={styles.input}
+                placeholder="Username"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -66,7 +68,7 @@ export const Login = () => {
             )}
             name="username"
           />
-          {errors.username && <Text>This is required.</Text>}
+          {errors.username && <Text style={styles.error}>This is required.</Text>}
 
           <Controller
             control={control}
@@ -75,7 +77,9 @@ export const Login = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
+              style={styles.input}
                 placeholder="password"
+                secureTextEntry={true} 
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -83,12 +87,45 @@ export const Login = () => {
             )}
             name="password"
           />
-          {errors.password && <Text>This is required.</Text>}
+          {errors.password && <Text style={styles.error}>This is required.</Text>}
 
-          <Button title="Login!" onPress={handleSubmit(onSubmit)} />
+          <Button  style={styles.button} title="Login!" onPress={handleSubmit(onSubmit)} />
         </View>
       )}
-      <Button onPress={() => goBack()} title="X" />
+      {/* <Button style={styles.button} onPress={() => goBack()} title="X" /> */}
     </View>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+   /*  justifyContent: "center", */
+    alignItems: "center",
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  input: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+  error: {
+    color: "red",
+    marginBottom: 10,
+  },
+  button: {
+    marginTop: 20,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+  },
+});
+
