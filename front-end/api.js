@@ -75,7 +75,7 @@ export const postVanByOwner = async (data) => {
       endDate: data.endDate,
     };
     data.amenities = data.amenities.split(",");
-    data.images = data.images.split(",");
+    // data.images = data.images.split(",");
     delete data.region;
     delete data.postcode;
     delete data.endDate;

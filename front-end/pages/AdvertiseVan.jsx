@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import {
   Button,
+  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -14,13 +15,16 @@ import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { postVanByOwner } from "../api";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../App";
+ import * as ImagePicker from 'expo-image-picker';
 
 export const AdvertiseVan = () => {
   const { navigate } = useNavigation();
   const [date, setDate] = useState(new Date());
   const [finishDate, setFinishDate] = useState(new Date());
   const [clicked, setClicked] = useState(false);
+  const [images, setImages] = useState([]);
   const { currentUser, setCurrentUser } = useContext(UserContext);
+  
 
   const {
     control,
@@ -46,6 +50,7 @@ export const AdvertiseVan = () => {
   });
   const onSubmit = (formData) => {
     formData.owner = currentUser.user._id;
+    formData.images = images;
     console.log(formData);
     postVanByOwner(formData).then(({ data }) => {
       navigate("IndividualVan", {
@@ -72,6 +77,23 @@ export const AdvertiseVan = () => {
     }
   };
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: false,
+      allowsMultipleSelection: true,
+      quality: 1
+    })
+
+    if (!result.cancelled) {
+      const imagesArr = result.assets.map(image => image.uri);
+
+      setImages((currImages) => [...currImages, ...imagesArr])
+      
+    } else {
+      alert('You did not select any image.');
+    }
+  };
+
   const showMode = (currentMode) => {
     if (!clicked) {
       DateTimePickerAndroid.open({
@@ -95,6 +117,8 @@ export const AdvertiseVan = () => {
   const showDatepicker = () => {
     showMode("date");
   };
+
+  console.log(images);
 
   return (
     <ScrollView>
@@ -300,24 +324,18 @@ export const AdvertiseVan = () => {
         name="sleeps"
       />
       {errors.sleeps && <Text>This is required.</Text>}
+          <Button title="image upload" label="Upload Image" onPress={() => pickImage()} />
+          <Button title="reset-images" label="Reset" onPress={() => setImages([])
+          } />
+          
 
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="images"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="images"
-      />
-      {errors.images && <Text>This is required.</Text>}
-
+      <ScrollView>
+          {images.map((image, index) => {
+            {/* console.log(image) */}
+            return (<Image key={index} style={{width: 80, height: 80}} source={{ uri: image}} />)})
+            
+            }
+            </ScrollView>
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </ScrollView>
   );
