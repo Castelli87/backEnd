@@ -26,7 +26,7 @@ export const IndividualVan = ({ route, navigation }) => {
     getCamperVan(id).then(({ data }) => {
       setVan(data);
     });
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     getReviewsByVanId(id).then(({ data }) => {
