@@ -15,7 +15,7 @@ import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { postVanByOwner } from "../api";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../App";
- import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 export const AdvertiseVan = () => {
   const { navigate } = useNavigation();
