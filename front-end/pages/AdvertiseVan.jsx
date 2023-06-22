@@ -97,228 +97,285 @@ export const AdvertiseVan = () => {
   };
 
   return (
-    <ScrollView>
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="van name"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollContainer}>
+        {/*  <Text style={styles.title}>Advertise a Van</Text> */}
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Van Name</Text>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="Van name"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="vanName"
           />
-        )}
-        name="vanName"
-      />
-      {errors.vanName && <Text>This is required.</Text>}
-
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="description"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            multiline={true}
+          {errors.vanName && (
+            <Text style={styles.errorText}>This is required.</Text>
+          )}
+        </View>
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Description</Text>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="description"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                multiline={true}
+              />
+            )}
+            name="description"
           />
-        )}
-        name="description"
-      />
-      {errors.description && <Text>This is required.</Text>}
+          {errors.description && <Text>This is required.</Text>}
+        </View>
 
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="make"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="make"
-      />
-      {errors.make && <Text>This is required.</Text>}
-
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="model"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="model"
-      />
-      {errors.model && <Text>This is required.</Text>}
-
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="year"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            keyboardType="number-pad"
-          />
-        )}
-        name="year"
-      />
-      {errors.year && <Text>This is required.</Text>}
-
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="region"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="region"
-      />
-      {errors.region && <Text>This is required.</Text>}
-
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="postcode"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            maxLength={8}
-          />
-        )}
-        name="postcode"
-      />
-      {errors.postcode && <Text>This is required.</Text>}
-
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="amenities - fridge, cooker etc"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            multiline={true}
-          />
-        )}
-        name="amenities"
-      />
-
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <View>
-            <Button
-              onPress={showDatepicker}
-              // disable={}
-              title="Please pick start Date"
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="make"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
             />
-            <Text>selected: {date.toLocaleString()}</Text>
-          </View>
-        )}
-        name="startDate"
-      />
-      {errors.startDate && <Text>This is required.</Text>}
+          )}
+          name="make"
+        />
+        {errors.make && <Text>This is required.</Text>}
 
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <View>
-            <Button onPress={showDatepicker} title="Please pick end Date" />
-            <Text>selected: {finishDate.toLocaleString()}</Text>
-          </View>
-        )}
-        name="endDate"
-      />
-      {errors.endDate && <Text>This is required.</Text>}
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="model"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="model"
+        />
+        {errors.model && <Text>This is required.</Text>}
 
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="price per night"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            keyboardType="number-pad"
-          />
-        )}
-        name="pricePerNight"
-      />
-      {errors.pricePerNight && <Text>This is required.</Text>}
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="year"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              keyboardType="number-pad"
+            />
+          )}
+          name="year"
+        />
+        {errors.year && <Text>This is required.</Text>}
 
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="sleeps"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            keyboardType="number-pad"
-          />
-        )}
-        name="sleeps"
-      />
-      {errors.sleeps && <Text>This is required.</Text>}
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="region"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="region"
+        />
+        {errors.region && <Text>This is required.</Text>}
 
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="images"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="images"
-      />
-      {errors.images && <Text>This is required.</Text>}
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="postcode"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              maxLength={8}
+            />
+          )}
+          name="postcode"
+        />
+        {errors.postcode && <Text>This is required.</Text>}
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-    </ScrollView>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="amenities - fridge, cooker etc"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              multiline={true}
+            />
+          )}
+          name="amenities"
+        />
+
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View>
+              <Button
+                onPress={showDatepicker}
+                // disable={}
+                title="Please pick start Date"
+              />
+              <Text>selected: {date.toLocaleString()}</Text>
+            </View>
+          )}
+          name="startDate"
+        />
+        {errors.startDate && <Text>This is required.</Text>}
+
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View>
+              <Button onPress={showDatepicker} title="Please pick end Date" />
+              <Text>selected: {finishDate.toLocaleString()}</Text>
+            </View>
+          )}
+          name="endDate"
+        />
+        {errors.endDate && <Text>This is required.</Text>}
+
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="price per night"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              keyboardType="number-pad"
+            />
+          )}
+          name="pricePerNight"
+        />
+        {errors.pricePerNight && <Text>This is required.</Text>}
+
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="sleeps"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              keyboardType="number-pad"
+            />
+          )}
+          name="sleeps"
+        />
+        {errors.sleeps && <Text>This is required.</Text>}
+
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="images"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="images"
+        />
+        {errors.images && <Text>This is required.</Text>}
+
+        <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: "#ffffff",
+  },
+  scrollContainer: {
+    flexGrow: 1,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  formGroup: {
+    marginBottom: 16,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  input: {
+    height: 40,
+    borderColor: "#cccccc",
+    borderWidth: 1,
+    borderRadius: 4,
+    paddingHorizontal: 8,
+  },
+  errorText: {
+    color: "red",
+    marginTop: 4,
+  },
+  datePickerButton: {
+    marginBottom: 8,
+  },
+  dateSelectedText: {
+    fontSize: 14,
+    marginBottom: 8,
+  },
+  submitButton: {
+    marginTop: 16,
+  },
+});
