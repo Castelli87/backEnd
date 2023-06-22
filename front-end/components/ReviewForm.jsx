@@ -25,6 +25,7 @@ const ReviewForm = ({ vanId, onSubmit }) => {
     <View style={styles.container}>
       <Text>Rating:</Text>
       <TextInput
+      placeholder="1-10"
         style={styles.input}
         value={rating}
         onChangeText={handleRatingChange}
@@ -33,6 +34,7 @@ const ReviewForm = ({ vanId, onSubmit }) => {
 
       <Text>Comment:</Text>
       <TextInput
+      placeholder="Enter a comment"
         style={styles.input}
         value={comment}
         onChangeText={handleCommentChange}
